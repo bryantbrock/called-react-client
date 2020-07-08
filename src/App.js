@@ -4,6 +4,7 @@ import {BrowserRouter} from "react-router-dom"
 import {PersistGate} from 'redux-persist/integration/react'
 import {Routing} from "app/routing"
 import {store, persistor} from 'store'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
   render() {
