@@ -3,7 +3,7 @@ import PropType from 'prop-types'
 import {Input} from 'components'
 import {toObj} from 'utils/misc'
 import 'resources/css/main.css'
-
+import BSForm from 'react-bootstrap/Form'
 
 class Form extends Component {
 
@@ -18,27 +18,29 @@ class Form extends Component {
   }
   renderFields(fields) {
     return fields.map(({label, name, type}) => 
-      <Input 
+    <BSForm.Group controlId="formBasicEmail">
+      <BSForm.Control 
         key={name}
         type={type}
-        label={label}
+        placeholder={label}
         name={name}
         value={this.state[name]}
         onChange={e => this.onChange(e)} />
+      </BSForm.Group>
     )
   }
   render() {
     const {fields, children} = this.props
 
     return (
-      <form
+      <BSForm
         onSubmit={e => this.onSubmit(e)}
         className="form">
 
         {this.renderFields(fields)}
         {children}
 
-      </form>
+      </BSForm>
     )
   }
 }

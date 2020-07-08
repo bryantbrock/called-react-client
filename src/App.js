@@ -5,7 +5,6 @@ import {PersistGate} from 'redux-persist/integration/react'
 import {Routing} from "app/routing"
 import {store, persistor} from 'store'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Container from 'react-bootstrap/Container';
 
 class App extends React.Component {
   render() {
@@ -16,9 +15,6 @@ class App extends React.Component {
             <Routing />
           </BrowserRouter>
         </PersistGate>
-        <Container>
-          <h1>App</h1>
-        </Container>
       </Provider>
     )
   }

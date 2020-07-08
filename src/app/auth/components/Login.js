@@ -8,6 +8,8 @@ import {Header, Anchor, SubmitButton} from 'components'
 import {AUTH_TYPES} from 'app/auth/constants'
 import {Form} from 'modules/form'
 import 'resources/css/pages.css'
+import Button from 'react-bootstrap/Button'
+import {Link} from 'react-router-dom'
 
 const authEnhancer = connect(
   state => ({
@@ -39,13 +41,15 @@ class Login extends Component {
 
     return (
       <div className="login-root">
-        <Header>Login</Header>
-        <Form
-          onSubmit={data => this.onSubmit(data, button.path)}
-          fields={loginFields}>
-          <Anchor path={anchor.path}>{anchor.value}</Anchor>
-          <SubmitButton isLoading={false}>{button.value}</SubmitButton>
-        </Form>
+        <div className="shadow p-5 bg-white rounded text-center">
+          <h2>Login</h2>
+          <Form
+            onSubmit={data => this.onSubmit(data, button.path)}
+            fields={loginFields}>
+            <Button as="input" type="submit" value={button.value} block className="mb-4" />
+            <Link to={anchor.path}>{anchor.value}</Link>
+          </Form>
+        </div>
       </div>
     )
   }
