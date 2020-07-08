@@ -1,0 +1,1 @@
+export {default as Dashboard} from 'app/dashboard/components/Dashboard'

@@ -1,0 +1,1 @@
+export {default as Form} from 'modules/form/components/Form'

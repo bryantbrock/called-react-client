@@ -1,0 +1,16 @@
+@import './main.css';
+
+/* Auth Pages */
+.sign-up-root,
+.login-root {
+  width: 90%;
+  margin: 5em auto;
+  padding: 2em;
+  max-width: 500px;
+}
+
+.dashboard-root {
+  padding: 1em;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
