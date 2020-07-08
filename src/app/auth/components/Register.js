@@ -4,7 +4,8 @@ import {submitAuthForm} from 'app/auth/state'
 import {registerFields} from 'app/auth/constants'
 import {clearErrors} from 'app/errors/state'
 import {redirectOnSuccess} from 'app/auth/selectors'
-import {Header, Anchor, Button} from 'components'
+import {Header, Anchor, SubmitButton} from 'components'
+import {AUTH_TYPES} from 'app/auth/constants'
 import {Form} from 'modules/form'
 import 'resources/css/pages.css'
 
@@ -23,7 +24,7 @@ export class Register extends Component {
     const {submitAuthForm, clearErrors, history} = this.props
 
     clearErrors()
-    await submitAuthForm(data, 'sign-up')
+    await submitAuthForm(data, AUTH_TYPES.SIGN_UP)
 
     if (this.props.redirect) {
       history.push(`/${path}`)
@@ -40,12 +41,8 @@ export class Register extends Component {
         <Form
           onSubmit={data => this.onSubmit(data, button.path)}
           fields={registerFields}>
-          <Anchor 
-            path={anchor.path}
-            value={anchor.value} />
-          <Button
-            value={button.value}
-            path={button.path}/>
+          <Anchor path={anchor.path}>{anchor.path}</Anchor>
+          <SubmitButton>{button.value}</SubmitButton>
         </Form>
     </div>
     )

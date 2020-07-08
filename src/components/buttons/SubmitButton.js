@@ -2,17 +2,11 @@ import React from 'react'
 import {Spinner} from 'components'
 import 'resources/css/main.css'
 
-export default ({
-  children, 
-  className, 
-  color, 
-  isLoading,
-  onClick,
-}) => {
+export default ({children, className, color, isLoading}) => {
 
   return <button
     className={className}
-    onClick={onClick}
+    type="submit"
     color={color}>
       {isLoading ?
         <Spinner /> : 

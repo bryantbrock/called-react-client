@@ -38,3 +38,11 @@ export const resetState = state => {
 }
 
 export const NBSP = '\u00a0'
+
+export const definePrefixedEnum = (prefix, values) => {
+  values.forEach(value => {
+    values[value.toUpperCase()] = '' + prefix + value
+  })
+
+  return values
+}

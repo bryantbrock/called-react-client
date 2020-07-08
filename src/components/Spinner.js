@@ -3,14 +3,7 @@ import 'resources/css/main.css'
 
 export class Loader extends Component {
   render() {
-    const {visible} = this.props
-
-    return <div style={{height: '100%'}}>
-      {visible && 
-        <div 
-          className="full-loader" />
-      }
-    </div>
+    return <div className="full-loader" />
   }
 }
  

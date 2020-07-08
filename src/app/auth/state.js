@@ -1,6 +1,7 @@
-import axios from 'axios'
 import {createSlice} from '@reduxjs/toolkit'
 import {Errors} from 'app/errors'
+import {AUTH_TYPES} from 'app/auth/constants'
+import {signIn, signUp} from 'app/requests'
 
 const initialState = {
   token: null,
@@ -21,9 +22,7 @@ export const Auth = createSlice({
   }
 })
 
-
-// Logic
-const getToken = getState => getState().auth.token
+// Async calls
 const setSuccess = res => dispatch => {
   dispatch(Auth.actions.authSuccess(res))
   dispatch(Errors.actions.success())
@@ -36,22 +35,26 @@ const setError = err => dispatch => {
 // Thunks
 export const logoutUser = () => dispatch => {
   try {
-    localStorage.removeItem('token')
     dispatch(Auth.actions.logout())
   } catch (err) {
     console.error('failed to logout')
   }
 }
-export const submitAuthForm = (user, url = '') => async (dispatch, getState) => {
+export const submitAuthForm = (user, type = AUTH_TYPES.SIGN_IN) => async dispatch => {
   dispatch(Auth.actions.setSubmitted())
-  await axios.post(`/api/auth/${url}`, user, getToken(getState))
-    .then(res => {
-      localStorage.setItem('token', res.data.token)
-      dispatch(setSuccess(res.data))
-    })
-    .catch(err => dispatch(setError(err.response)))
-  return
+
+  switch(type) {
+    case AUTH_TYPES.SIGN_IN:
+      return signIn(user)
+        .then(setSuccess)
+        .catch(setError)
+    case AUTH_TYPES.SIGN_UP:
+      return signUp(user)
+        .then(setSuccess)
+        .catch(setError)
+    default:
+      return console.error('bad auth submission')
+  }
 }
 
-// Export the slice
 export default Auth

@@ -4,12 +4,12 @@ import 'resources/css/main.css'
 
 export class Anchor extends Component {
   render() {
-    const {path, className, value} = this.props
+    const {path, className, children} = this.props
 
     return (
       <Link
         className={className || 'anchor'}
-        to={path}>{value}</Link>
+        to={path}>{children}</Link>
     )
   }
 }

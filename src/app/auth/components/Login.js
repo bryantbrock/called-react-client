@@ -4,7 +4,8 @@ import {submitAuthForm} from 'app/auth/state'
 import {clearErrors} from 'app/errors/state'
 import {loginFields} from 'app/auth/constants'
 import {redirectOnSuccess} from 'app/auth/selectors'
-import {Header, Anchor, Button} from 'components'
+import {Header, Anchor, SubmitButton} from 'components'
+import {AUTH_TYPES} from 'app/auth/constants'
 import {Form} from 'modules/form'
 import 'resources/css/pages.css'
 
@@ -25,7 +26,7 @@ class Login extends Component {
     // Need to clear the form to tell if failed again
     clearErrors()
     
-    await submitAuthForm(data, 'login')
+    await submitAuthForm(data, AUTH_TYPES.SIGN_IN)
 
      if (this.props.redirect) {
       history.push(`/${path}`)
@@ -42,12 +43,8 @@ class Login extends Component {
         <Form
           onSubmit={data => this.onSubmit(data, button.path)}
           fields={loginFields}>
-          <Anchor 
-            path={anchor.path}
-            value={anchor.value} />
-          <Button
-            value={button.value}
-            path={button.path} />
+          <Anchor path={anchor.path}>{anchor.value}</Anchor>
+          <SubmitButton isLoading={false}>{button.value}</SubmitButton>
         </Form>
       </div>
     )
