@@ -16,7 +16,7 @@ class Form extends Component {
   }
   renderFields(fields) {
     return fields.map(({label, name, type}) => 
-    <BSForm.Group controlId="formBasicEmail">
+    <BSForm.Group key={name}>
       <BSForm.Control 
         key={name}
         type={type}
@@ -31,14 +31,14 @@ class Form extends Component {
     const {fields, children} = this.props
 
     return (
-      <BSForm
+      <form
         onSubmit={e => this.onSubmit(e)}
         className="form">
 
         {this.renderFields(fields)}
         {children}
 
-      </BSForm>
+      </form>
     )
   }
 }

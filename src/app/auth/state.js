@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {Errors} from 'app/errors'
-import {AUTH_TYPES} from 'app/auth/constants'
 import {signIn, signUp} from 'app/requests'
+import {history} from 'app/history'
 
 const initialState = {
   token: null,
@@ -22,39 +22,22 @@ export const Auth = createSlice({
   }
 })
 
-// Action Creators
-const setSuccess = res => dispatch => {
-  dispatch(Auth.actions.authSuccess(res))
-  dispatch(Errors.actions.success())
-}
-const setError = err => dispatch => {
-  dispatch(Auth.actions.authError(err))
-  dispatch(Errors.actions.error(err))
-}
-export const logoutUser = () => dispatch => {
-  try {
-    dispatch(Auth.actions.logout())
-  } catch (err) {
-    setError(err)
-  }
-}
-
-// Requests
-export const submitAuthForm = (user, type = AUTH_TYPES.SIGN_IN) => async dispatch => {
+// Actions
+export const logoutUser = () => dispatch =>
+  dispatch(Auth.actions.logout())
+export const authenticate = (user, signin = false) => async dispatch => {
   dispatch(Auth.actions.setSubmitted())
+  dispatch(Errors.actions.clear())
 
-  switch(type) {
-    case AUTH_TYPES.SIGN_IN:
-      return signIn(user)
-        .then(setSuccess)
-        .catch(setError)
-    case AUTH_TYPES.SIGN_UP:
-      return signUp(user)
-        .then(setSuccess)
-        .catch(setError)
-    default:
-      return console.error('bad auth submission')
-  }
+  await (signin ? signIn(user) : signUp(user))
+    .then(res => dispatch(Auth.actions.authSuccess(res)))
+    .then(() => dispatch(Errors.actions.success()))
+    .then(history.push('/dashboard'))
+    .then(dispatch(Errors.actions.clear()))
+    .catch(err => {
+      dispatch(Auth.actions.authError(err))
+      dispatch(Errors.actions.error(err))
+    })
 }
 
 export default Auth

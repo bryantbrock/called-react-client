@@ -1,10 +1,9 @@
 import axios from 'axios'
-import {Errors} from 'app/errors'
 
 export const baseUrl = 'https://called-backend.herokuapp.com/called-backend'
 
 // Custom request creator
-const createRequest = async (
+const createRequest = (
   method, 
   url, 
   data = null, 
@@ -17,9 +16,9 @@ const createRequest = async (
 
   const fullPath = endpoint ? `${baseUrl}/${url}/${endpoint}/` : `${baseUrl}/${url}/`
 
-  return await axios[method](fullPath, data, config)
+  return axios[method](fullPath, data, config)
     .then(res => res.data)
-    .catch(error => Errors.actions.error(error.response.data))
+    .catch(error => error.response.data)
 }
 
 
