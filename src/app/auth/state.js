@@ -22,7 +22,7 @@ export const Auth = createSlice({
   }
 })
 
-// Async calls
+// Action Creators
 const setSuccess = res => dispatch => {
   dispatch(Auth.actions.authSuccess(res))
   dispatch(Errors.actions.success())
@@ -31,15 +31,15 @@ const setError = err => dispatch => {
   dispatch(Auth.actions.authError(err))
   dispatch(Errors.actions.error(err))
 }
-
-// Thunks
 export const logoutUser = () => dispatch => {
   try {
     dispatch(Auth.actions.logout())
   } catch (err) {
-    console.error('failed to logout')
+    setError(err)
   }
 }
+
+// Requests
 export const submitAuthForm = (user, type = AUTH_TYPES.SIGN_IN) => async dispatch => {
   dispatch(Auth.actions.setSubmitted())
 
