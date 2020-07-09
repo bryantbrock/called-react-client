@@ -38,18 +38,16 @@ export class Register extends Component {
   }
   render() {
     const {loading} = this.state
-    const anchor = {value: "Already have an Account? Login", path: '/login'}
-    const button = {value: 'Sign Up', path: 'dashboard'}
 
     return (
       <div className="sign-up-root">
         <div className="shadow p-5 bg-white rounded text-center">
           <h2>Sign Up</h2>
           <Form
-            onSubmit={data => this.onSubmit(data, button.path)}
+            onSubmit={data => this.onSubmit(data, 'dashboard')}
             fields={registerFields}>
-            <SubmitButton isLoading={loading} className="mb-4">{button.value}</SubmitButton>
-            <Anchor path={anchor.path}>{anchor.value}</Anchor>
+            <SubmitButton isLoading={loading} className="mb-4">Sign Up</SubmitButton>
+            <Anchor path="/login">"Already have an Account? Login"</Anchor>
           </Form>
         </div>
       </div>

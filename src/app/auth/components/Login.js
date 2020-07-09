@@ -37,18 +37,16 @@ class Login extends Component {
   }
   render() {
     const {loading} = this.state
-    const anchor = {path: '/sign-up', value: "Don't have an Account? Sign up"}
-    const button = {value: 'Login', path: 'dashboard'}
 
     return (
       <div className="login-root">
         <div className="shadow p-5 bg-white rounded text-center">
           <h2>Login</h2>
           <Form
-            onSubmit={data => this.onSubmit(data, button.path)}
+            onSubmit={data => this.onSubmit(data, 'dashboard')}
             fields={loginFields}>
-            <SubmitButton isLoading={loading} className="mb-4">{button.value}</SubmitButton>
-            <Anchor path={anchor.path}>{anchor.value}</Anchor>
+            <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
+            <Anchor path='/sign-up'>"Don't have an Account? Sign up"</Anchor>
           </Form>
         </div>
       </div>
