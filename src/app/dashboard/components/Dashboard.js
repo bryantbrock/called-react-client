@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Nav, Display} from 'components'
 import {logoutUser} from 'app/auth/state'
-import 'resources/css/pages.css'
 
 const enchanceDashboard = connect(
   null,

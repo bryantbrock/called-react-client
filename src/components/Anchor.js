@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import 'resources/css/main.css'
 
 export class Anchor extends Component {
   render() {
@@ -8,7 +7,7 @@ export class Anchor extends Component {
 
     return (
       <Link
-        className={className || 'anchor'}
+        className={className + ' anchor'}
         to={path}>{children}</Link>
     )
   }

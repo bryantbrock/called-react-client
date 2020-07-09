@@ -1,15 +1,19 @@
 import React from 'react'
-import {Spinner} from 'components'
-import 'resources/css/main.css'
+import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner'
 
-export default ({children, className, color, isLoading}) => {
+export default ({children, className, variant, isLoading}) => {
 
-  return <button
+  return <Button
+    block
     className={className}
     type="submit"
-    color={color}>
-      {isLoading ?
-        <Spinner /> : 
-        <span>{children}</span>}
-  </button>
+    variant={variant}>
+      {isLoading ? <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true" /> : children}
+  </Button>
 }

@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
-import 'resources/css/main.css'
+import React from 'react'
+import Spinner from 'react-bootstrap/Spinner'
 
-export class Loader extends Component {
-  render() {
-    return <div className="full-loader" />
-  }
+export default ({animation, size}) => {
+  return <Spinner
+    animation={animation || "border"}
+    size={size || "sm"}
+    role="status"
+    aria-hidden="true" />
 }
- 
-export default Loader

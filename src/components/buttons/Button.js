@@ -1,6 +1,5 @@
 import React from 'react'
 import {Spinner} from 'components'
-import 'resources/css/main.css'
 
 export default ({
   children, 

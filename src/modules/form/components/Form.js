@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import PropType from 'prop-types'
-import {Input} from 'components'
 import {toObj} from 'utils/misc'
-import 'resources/css/main.css'
 import BSForm from 'react-bootstrap/Form'
 
 class Form extends Component {

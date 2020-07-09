@@ -4,12 +4,9 @@ import {submitAuthForm} from 'app/auth/state'
 import {clearErrors} from 'app/errors/state'
 import {loginFields} from 'app/auth/constants'
 import {redirectOnSuccess} from 'app/auth/selectors'
-import {Header, Anchor, SubmitButton} from 'components'
+import {Anchor, SubmitButton} from 'components'
 import {AUTH_TYPES} from 'app/auth/constants'
 import {Form} from 'modules/form'
-import 'resources/css/pages.css'
-import Button from 'react-bootstrap/Button'
-import {Link} from 'react-router-dom'
 
 const authEnhancer = connect(
   state => ({
@@ -22,11 +19,12 @@ const authEnhancer = connect(
 )
 
 class Login extends Component {
+  state = {loading: false}
   onSubmit = async (data, path) => {
     const {submitAuthForm, clearErrors, history} = this.props
 
-    // Need to clear the form to tell if failed again
     clearErrors()
+    this.setState({loading: true})
     
     await submitAuthForm(data, AUTH_TYPES.SIGN_IN)
 
@@ -34,8 +32,11 @@ class Login extends Component {
       history.push(`/${path}`)
       clearErrors()
     }
+
+    this.setState({loading: false})
   }
   render() {
+    const {loading} = this.state
     const anchor = {path: '/sign-up', value: "Don't have an Account? Sign up"}
     const button = {value: 'Login', path: 'dashboard'}
 
@@ -46,8 +47,8 @@ class Login extends Component {
           <Form
             onSubmit={data => this.onSubmit(data, button.path)}
             fields={loginFields}>
-            <Button as="input" type="submit" value={button.value} block className="mb-4" />
-            <Link to={anchor.path}>{anchor.value}</Link>
+            <SubmitButton isLoading={loading} className="mb-4">{button.value}</SubmitButton>
+            <Anchor path={anchor.path}>{anchor.value}</Anchor>
           </Form>
         </div>
       </div>
