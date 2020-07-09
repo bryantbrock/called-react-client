@@ -23,11 +23,11 @@ export const Auth = createSlice({
 })
 
 // Action Creators
-const setSuccess = res => dispatch => {
+const setSuccess = dispatch => res => {
   dispatch(Auth.actions.authSuccess(res))
   dispatch(Errors.actions.success())
 }
-const setError = err => dispatch => {
+const setError = dispatch => err => {
   dispatch(Auth.actions.authError(err))
   dispatch(Errors.actions.error(err))
 }
@@ -46,8 +46,8 @@ export const submitAuthForm = (user, type = AUTH_TYPES.SIGN_IN) => async dispatc
   switch(type) {
     case AUTH_TYPES.SIGN_IN:
       return signIn(user)
-        .then(setSuccess)
-        .catch(setError)
+        .then(setSuccess(dispatch))
+        .catch(setError(dispatch))
     case AUTH_TYPES.SIGN_UP:
       return signUp(user)
         .then(setSuccess)
