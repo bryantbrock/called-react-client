@@ -6,7 +6,8 @@ export const loginFields = [
 ]
 
 export const registerFields = [
-  {label: 'Name', name: 'name'},
+  {label: 'First Name', name: 'first_name'},
+  {label: 'Last Name', name: 'last_name'},
   {label: 'Email', name: 'email'},
   {label: 'Password', name: 'password', type: 'password'},
   {label: 'Confirm Password', name: 'verify', type: 'password'},

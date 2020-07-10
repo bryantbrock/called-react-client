@@ -1,15 +1,9 @@
 import axios from 'axios'
-import {Errors} from 'app/errors'
 
 export const baseUrl = 'https://called-backend.herokuapp.com/called-backend'
 
 // Custom request creator
-const createRequest = async (
-  method, 
-  url, 
-  data = null, 
-  config = null, 
-  endpoint = null) => {
+const createRequest = (method, url) => (data, config = null, endpoint = null) => {
 
   // This function takes a method, endoint, url, and data.
   // This will eventually need authentication, which I will 
@@ -17,20 +11,18 @@ const createRequest = async (
 
   const fullPath = endpoint ? `${baseUrl}/${url}/${endpoint}/` : `${baseUrl}/${url}/`
 
-  return await axios[method](fullPath, data, config)
-    .then(res => res.data)
-    .catch(error => Errors.actions.error(error.response.data))
+  return axios[method](fullPath, data, config)
 }
 
 
 // Requests
-export const signIn = info => createRequest('post', 'obtain-auth-token', info)
-export const signUp = info => createRequest('post', 'users', info)
-export const changePassword = info => createRequest('post', 'password-reset', info)
-export const confirmPin = pin => createRequest('post', 'password-reset/validate_token', {token: pin})
-export const resetPassword = (password, token) => createRequest('post', 'password-reset/confirm', {password, token})
-export const getEvent = pk => createRequest('get', 'events', null, null, pk)
-export const getEvents = () => createRequest('get', 'events')
-export const postRegistrant = (data, config) => createRequest('post', 'registrants', data, config)
-export const getRegistrant = (pk, data) => createRequest('get', 'registrants', data, null, pk)
-export const getRegistrants = (data) => createRequest('get', 'registrants', data)
+export const signIn = createRequest('post', 'obtain-auth-token')
+export const signUp = createRequest('post', 'users')
+export const changePassword = createRequest('post', 'password-reset')
+export const confirmPin = createRequest('post', 'password-reset/validate_token')
+export const resetPassword = createRequest('post', 'password-reset/confirm')
+export const getEvent = createRequest('get', 'events')
+export const getEvents = createRequest('get', 'events')
+export const postRegistrant = createRequest('post', 'registrants')
+export const getRegistrant = createRequest('get', 'registrants')
+export const getRegistrants = createRequest('get', 'registrants')
