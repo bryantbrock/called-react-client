@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Button, Nav, Display} from 'components'
-import {logoutUser} from 'app/auth/state'
+import {Auth} from 'app/auth/state'
 
 const enchanceDashboard = connect(
   null,
   {
-    logoutUser,
+    logoutUser: Auth.actions.logout,
   }
 )
 
