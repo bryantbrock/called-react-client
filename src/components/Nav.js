@@ -2,8 +2,21 @@ import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
 import Navbar from 'react-bootstrap/Navbar'
 import BSNav from 'react-bootstrap/Nav'
+import {Auth} from 'app/auth/state'
+import {connect} from 'react-redux'
+
+const enchanceNav = connect(
+  null,
+  {
+    logoutUser: Auth.actions.logout,
+  }
+)
 
 export class Nav extends Component {
+  logout() {
+    this.props.logoutUser()
+  }
+
   render() {
     return (
       <Navbar bg="light" expand="lg">
@@ -21,4 +34,4 @@ export class Nav extends Component {
   }
 }
 
-export default Nav
+export default enchanceNav(Nav)
