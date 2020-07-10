@@ -19,7 +19,7 @@ export class Register extends Component {
     return (
       <div className="sign-up-root">
         <div className="shadow p-5 bg-white rounded text-center">
-        <h1>Sign Up</h1>
+        <h1 className="mb-3">Sign Up</h1>
           {errors && Object.values(errors).map((value, idx) => 
               <Alert key={idx} variant="danger">{value}</Alert>
             )}
@@ -27,7 +27,7 @@ export class Register extends Component {
             onSubmit={authenticate}
             fields={registerFields}>
             <SubmitButton isLoading={loading} className="mb-4">Sign Up</SubmitButton>
-            <Anchor path="/login">Already have an Account? Login</Anchor>
+            <Anchor path="/signin">Already have an Account? Login</Anchor>
           </Form>
         </div>
       </div>

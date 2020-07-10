@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {Component} from 'app/utils'
 import {connect} from 'react-redux'
 import {Button, Nav, Display} from 'components'
 import {Auth} from 'app/auth/state'
