@@ -19,7 +19,7 @@ export class Register extends Component {
     return (
       <div className="sign-up-root">
         <div className="shadow p-5 bg-white rounded text-center">
-        <h1 className="mb-4 text-2xl">Sign Up</h1>
+        <h1>Sign Up</h1>
           {errors && Object.values(errors).map((value, idx) => 
               <Alert key={idx} variant="danger">{value}</Alert>
             )}
