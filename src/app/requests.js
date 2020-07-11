@@ -18,9 +18,9 @@ const createRequest = (method, url) => (data, config = null, endpoint = null) =>
 // Requests
 export const signIn = createRequest('post', 'obtain-auth-token')
 export const signUp = createRequest('post', 'users')
-export const changePassword = createRequest('post', 'password-reset')
+export const sendResetEmail = createRequest('post', 'password-reset')
 export const confirmPin = createRequest('post', 'password-reset/validate_token')
-export const resetPassword = createRequest('post', 'password-reset/confirm')
+export const setNewPassword = createRequest('post', 'password-reset/confirm')
 export const getEvent = createRequest('get', 'events')
 export const getEvents = createRequest('get', 'events')
 export const postRegistrant = createRequest('post', 'registrants')

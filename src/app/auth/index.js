@@ -1,3 +1,5 @@
 export {default as Auth} from 'app/auth/state'
 export {default as Register} from 'app/auth/components/Register'
 export {default as Login} from 'app/auth/components/Login'
+export {default as ResetPassword} from 'app/auth/components/ResetPassword'
+export {default as Confirmation} from 'app/auth/components/Confirmation'
