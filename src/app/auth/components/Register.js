@@ -2,9 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {authenticate} from 'app/auth/state'
 import {registerFields} from 'app/auth/constants'
-import {SubmitButton, Anchor} from 'components'
+import {SubmitButton, Card} from 'components'
+import {Button} from 'components/bootstrap'
 import {Form} from 'modules/form'
 import Alert from 'react-bootstrap/Alert'
+import {history} from 'app/history'
 
 const authEnhancer = connect(
   state => ({
@@ -18,8 +20,8 @@ export class Register extends Component {
 
     return (
       <div className="sign-up-root">
-        <div className="shadow p-5 bg-white rounded text-center">
-        <h1>Sign Up</h1>
+        <Card>
+        <h1 className="mb-3">Sign Up</h1>
           {errors && Object.values(errors).map((value, idx) => 
               <Alert key={idx} variant="danger">{value}</Alert>
             )}
@@ -27,9 +29,9 @@ export class Register extends Component {
             onSubmit={authenticate}
             fields={registerFields}>
             <SubmitButton isLoading={loading} className="mb-4">Sign Up</SubmitButton>
-            <Anchor path="/login">Already have an Account? Login</Anchor>
+            <Button variant="outline-dark" onClick={() => history.push('/signin')}>Don't have an Account? Sign up</Button>
           </Form>
-        </div>
+        </Card>
       </div>
     )
   }

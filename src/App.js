@@ -7,6 +7,7 @@ import {history} from 'app/history'
 import {store, persistor} from './store'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './resources/css/main.scss'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 class App extends React.Component {
   render() {

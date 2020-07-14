@@ -1,15 +1,21 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import React from 'react'
+import {Component} from 'app/utils'
+import {history} from 'app/history'
 
 export class Anchor extends Component {
-  render() {
-    const {path, className, children} = this.props
+  onClick() {
+    const {onClick} = this.props
 
-    return (
-      <Link
-        className={className + ' anchor'}
-        to={path}>{children}</Link>
-    )
+    if (typeof onClick === 'string') {
+      return history.push(onClick)
+    }
+
+    onClick()    
+  }
+  render() {
+    const {children} = this.props
+
+    return <a className="anchor" onClick={this.onClick}>{children}</a>
   }
 }
 

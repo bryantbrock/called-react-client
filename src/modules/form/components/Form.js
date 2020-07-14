@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import PropType from 'prop-types'
 import {toObj} from 'utils/misc'
-import BSForm from 'react-bootstrap/Form'
+import {Anchor} from 'components'
+import {Form as BSForm} from 'components/bootstrap'
 
 class Form extends Component {
 
@@ -15,30 +16,33 @@ class Form extends Component {
     this.props.onSubmit(this.state)
   }
   renderFields(fields) {
-    return fields.map(({label, name, type}) => 
-    <BSForm.Group key={name}>
-      <BSForm.Control 
-        key={name}
-        type={type}
-        placeholder={label}
-        name={name}
-        value={this.state[name]}
-        onChange={e => this.onChange(e)} />
-      </BSForm.Group>
-    )
+    return fields.map(({label, name, type}) =>
+      <BSForm.Group key={name}>
+        <BSForm.Control 
+          type={type}
+          placeholder={label}
+          name={name}
+          value={this.state[name]}
+          onChange={e => this.onChange(e)} />
+        {(name === 'password' && this.props.resetPassword) && 
+          <BSForm.Text className="text-muted text-right">
+            <Anchor onClick="/reset-password">
+              Forgot Password?
+            </Anchor>
+          </BSForm.Text>}
+        </BSForm.Group>)
   }
   render() {
     const {fields, children} = this.props
 
     return (
-      <form
-        onSubmit={e => this.onSubmit(e)}
-        className="form">
+      <BSForm
+        onSubmit={e => this.onSubmit(e)}>
 
         {this.renderFields(fields)}
         {children}
 
-      </form>
+      </BSForm>
     )
   }
 }
