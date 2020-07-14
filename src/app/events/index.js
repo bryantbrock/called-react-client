@@ -1,0 +1,1 @@
+export {default as Events} from 'app/events/components/Events'
