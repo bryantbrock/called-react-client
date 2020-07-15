@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Nav, Display} from 'components'
+import {Nav} from 'components'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import EventCard from 'components/EventCard.js'
-import {Auth} from 'app/auth/state'
 import {backgroundFetchEvents, fetchEvents} from '../actions.js'
 import {store} from 'store.js'
 

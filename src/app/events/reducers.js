@@ -1,5 +1,4 @@
 import {
-  INVALIDATE_EVENTS,
   REQUEST_EVENTS,
   RECEIVE_EVENTS,
 } from './actions.js'
@@ -13,11 +12,6 @@ function eventsReducer(
   action
 ) {
   switch (action.type) {
-    case INVALIDATE_EVENTS:
-      return {
-        ...state,
-        didInvalidate: true,
-      }
     case REQUEST_EVENTS:
       return {
         ...state,

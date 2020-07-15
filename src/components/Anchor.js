@@ -14,7 +14,7 @@ export class Anchor extends Component {
   }
   render() {
     const {children} = this.props
-
+    // eslint-disable-next-line
     return <a className="anchor" onClick={this.onClick}>{children}</a>
   }
 }

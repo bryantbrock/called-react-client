@@ -1,10 +1,4 @@
-export const INVALIDATE_EVENTS = 'INVALIDATE_EVENTS'
-
-function invalidateEvents() {
-  return {
-    type: INVALIDATE_EVENTS,
-  }
-}
+import {getEvents} from 'app/requests'
 
 export const REQUEST_EVENTS = 'REQUEST_EVENTS'
 
@@ -33,9 +27,9 @@ export function fetchEvents(filter=null) {
 
     dispatch(requestEvents(filter))
 
-    return fetch(`https://called-backend.herokuapp.com/called-backend/events/`)
+    return getEvents()
       .then(
-        response => response.json()
+        response => response.data
       )
       .then(json =>
         dispatch(receiveEvents(filter, json))
@@ -47,9 +41,9 @@ export function backgroundFetchEvents(filter=null) {
 
   return function (dispatch) {
 
-    return fetch(`https://called-backend.herokuapp.com/called-backend/events/`)
+    return getEvents()
       .then(
-        response => response.json()
+        response => response.data
       )
       .then(json =>
         dispatch(receiveEvents(filter, json))

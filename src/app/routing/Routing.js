@@ -6,7 +6,7 @@ import {Auth} from 'app/auth'
 import {connect} from 'react-redux'
 
 const enhancer = connect(
-  null, 
+  null,
   {
     clearErrors: Auth.actions.clearErrors
   }
@@ -19,14 +19,11 @@ export class Routing extends Component {
   render() {
     return (
       <Switch>
-        {routes.map((route, idx) => 
+        {routes.map((route, idx) =>
           route.private
-          ? <PrivateRoute key={idx} path={route.path}>
-            <route.component title={route.title}/>
-          </PrivateRoute>
-          : <Route key={idx} path={route.path}>
-            <route.component title={route.title} />
-          </Route>)}
+            ? <PrivateRoute key={idx} path={route.path} component={route.component} title={route.title} />
+            : <Route key={idx} path={route.path} component={route.component} title={route.title} />
+        )}
       </Switch>
     )
   }
