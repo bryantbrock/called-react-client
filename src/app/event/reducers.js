@@ -54,7 +54,11 @@ export function registrantsReducer(
         ...state,
         isFetching: false,
         // update the item if it exists, otherwise, add it
-        items: action.registrants,
+        items: Array.from(new Set([...state.items, ...action.registrants].map(registrant => registrant.pk)))
+        .map(pk => {
+          const match = action.registrants.find(registrant => registrant.pk == pk)
+          return match ? match : state.items.find(registrant => registrant.pk == pk)
+        })
       }
     default:
       return state

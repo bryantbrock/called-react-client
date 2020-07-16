@@ -69,7 +69,7 @@ function receiveRegistrants(data) {
   }
 }
 
-export function fetchRegistrants(filter, token) {
+export function fetchRegistrants(filter={}, token) {
   return function (dispatch) {
 
     dispatch(requestRegistrants(filter, token))
@@ -84,7 +84,7 @@ export function fetchRegistrants(filter, token) {
   }
 }
 
-export function backgroundFetchRegistrants(filter, token) {
+export function backgroundFetchRegistrants(filter={}, token) {
   return function (dispatch) {
 
     return getRegistrants({}, {params: filter}, null, token)
