@@ -20,10 +20,11 @@ function requestRegistrant(id) {
 
 export const RECEIVE_REGISTRANT = 'RECEIVE_REGISTRANT'
 
-function receiveRegistrant(data) {
+function receiveRegistrant(data, created=false) {
   return {
     type: RECEIVE_REGISTRANT,
     registrant: data,
+    created: created,
   }
 }
 
@@ -37,7 +38,7 @@ export function createRegistrant(data, token) {
         response => response.data
       )
       .then(data =>
-        dispatch(receiveRegistrant(data))
+        dispatch(receiveRegistrant(data, true))
       )
   }
 }

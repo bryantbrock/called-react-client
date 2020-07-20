@@ -26,6 +26,7 @@ export function registrantReducer(
       return {
         ...state,
         isFetching: false,
+        newest: action.created ? action.registrant.pk : state.newest,
         // update the item if it exists, otherwise, add it
         // this might not be necessary, but I thought up a scenario where someone could have a newly created registrant in the store, don't remember what it was lol
         items: state.items.some(item => item.pk == action.registrant.pk) ? state.items.map((item, index) => {
