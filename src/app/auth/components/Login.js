@@ -5,9 +5,8 @@ import {authenticate} from 'app/auth/state'
 import {loginFields} from 'app/auth/constants'
 import {SubmitButton, Card} from 'components'
 import {Button} from 'components/bootstrap'
-import Alert from 'react-bootstrap/Alert'
+import {Alert, Container} from 'react-bootstrap'
 import {Form} from 'modules/form'
-import {history} from 'app/history'
 
 const authEnhancer = connect(
   state => ({
@@ -17,23 +16,25 @@ const authEnhancer = connect(
 
 class Login extends Component {
   render() {
-    const {loading, authenticate, errors} = this.props
+    const {loading, authenticate, errors, history} = this.props
 
     return (
       <div className="login-root">
-        <Card>
-          <h1 className="mb-3">Sign In</h1>
-          {errors && Object.values(errors).map((value, idx) => 
+        <div className="mx-auto min-vh-100 d-flex justify-content-center align-items-center" style={{maxWidth: '512px'}}>
+          <div className="shadow p-5 bg-white rounded text-center w-100">
+            <h1 className="mb-3">Sign In</h1>
+            {errors && Object.values(errors).map((value, idx) =>
               <Alert key={idx} variant="danger">{value}</Alert>
             )}
-          <Form
-            onSubmit={data => authenticate(data, true)}
-            resetPassword={true}
-            fields={loginFields}>
-            <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
-            <Button block size="sm" variant="outline-secondary" onClick={() => history.push('/signup')}>Don't have an Account? Sign up</Button>
-          </Form>
-        </Card>
+            <Form
+              onSubmit={data => authenticate(data, true)}
+              resetPassword={true}
+              fields={loginFields}>
+              <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
+              <Button block size="sm" variant="outline-secondary" onClick={() => history.push('/signup')}>Don't have an Account? Sign up</Button>
+            </Form>
+          </div>
+        </div>
       </div>
     )
   }

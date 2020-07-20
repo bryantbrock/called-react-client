@@ -13,6 +13,7 @@ const enchanceEventRegistration = connect(
     auth: state.auth,
     isFetching: state.events.isFetching,
     newest: state.registrants.newest,
+    submittedRegistrationInfo: false,
   }), {})
 
 export class EventRegistration extends Component {
@@ -22,7 +23,8 @@ export class EventRegistration extends Component {
     this.register = this.register.bind(this);
     this.registerWithPlan = this.registerWithPlan.bind(this);
     this.state = {
-      registrant: {}
+      registrant: {},
+      submitting: false,
     }
   }
 
@@ -37,16 +39,19 @@ export class EventRegistration extends Component {
     return <div className="events-root">
       <Nav />
       <Container className="mt-5">
-        {this.props.isFetching ? <div className="text-center"><Spinner animation="border" /></div> : <div>
+        {this.props.isFetching || this.state.submitting ? <div className="text-center"><Spinner animation="border" /></div> : <div>
           <h1>Register for {event.name}</h1>
+          <div hidden={this.state.submittedRegistrationInfo}>
           <Form form={event.registration_form} onSubmit={this.submitForm} />
-          <h2>How would you like to pay?</h2>
-          <Row>
+          </div>
+          <div hidden={!this.state.submittedRegistrationInfo}>
+            <h2>How would you like to pay?</h2>
+            <Row>
             <Col sm={12} md={6} lg={4} className="mt-4">
               <Card className="p-5 text-center">
                 <h1 className="mb-0">{event.price}</h1>
                 <p className="text-capitalize text-muted"><small>One Time</small></p>
-                <Button variant="primary" size="lg" onClick={this.register}>Select</Button>
+                <Button disabled={this.state.submitting} variant="primary" size="lg" onClick={this.register}>Select</Button>
               </Card>
             </Col>
             {event.payment_plans.map((plan, index) => {
@@ -54,11 +59,12 @@ export class EventRegistration extends Component {
                 <Card className="p-5 text-center">
                   <h1 className="mb-0">{plan.price.toFixed(2)}</h1>
                   <p className="text-capitalize text-muted"><small>{plan.payment_interval_str} | {plan.iterations} payments</small></p>
-                  <Button variant="secondary" size="lg" onClick={() => this.registerWithPlan(plan.pk)}>Select</Button>
+                  <Button disabled={this.state.submitting} variant="secondary" size="lg" onClick={() => this.registerWithPlan(plan.pk)}>Select</Button>
                 </Card>
               </Col>
             })}
           </Row>
+          </div>
         </div>}
       </Container>
     </div>
@@ -67,6 +73,7 @@ export class EventRegistration extends Component {
   submitForm(submission) {
     const {event_id} = this.props.match.params
     this.setState({
+      submittedRegistrationInfo: true,
       registrant: {
         registration_information: submission.data,
         event: event_id,
@@ -79,6 +86,9 @@ export class EventRegistration extends Component {
   }
 
   register() {
+    this.setState({
+      submitting: true,
+    })
     store.dispatch(createRegistrant(this.state.registrant, this.props.auth.user.token))
   }
 
