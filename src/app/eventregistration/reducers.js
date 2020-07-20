@@ -1,5 +1,6 @@
 import {
   CREATE_REGISTRANT,
+  REQUEST_REGISTRANT,
   RECEIVE_REGISTRANT,
 } from './actions.js'
 
@@ -12,6 +13,11 @@ export function registrantReducer(
 ) {
   switch (action.type) {
     case CREATE_REGISTRANT:
+      return {
+        ...state,
+        isFetching: true,
+      }
+    case REQUEST_REGISTRANT:
       return {
         ...state,
         isFetching: true,

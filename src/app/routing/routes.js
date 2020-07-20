@@ -3,6 +3,7 @@ import {Dashboard} from 'app/dashboard'
 import {Events} from 'app/events'
 import {Event} from 'app/event'
 import {EventRegistration} from 'app/eventregistration'
+import {EventPayment} from 'app/eventpayment'
 
 export const routes = [
   {title: 'Sign Up', path: "/signup", component: Register},
@@ -12,5 +13,6 @@ export const routes = [
   {title: 'Dashboard', path: "/dashboard", component: Dashboard, private: true},
   {title: 'Events', path: "/events", component: Events, private: true},
   {title: 'Register for Event', path: "/event/:event_id/register", component: EventRegistration, private: true},
+  {title: 'Register for Event', path: "/event/:event_id/pay/:registrant_id", component: EventPayment, private: true},
   {title: 'Event', path: "/event/:event_id", component: Event, private: true},
 ]
