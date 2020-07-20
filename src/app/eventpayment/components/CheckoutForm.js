@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Alert, Button, Col, Container, Form, Row, Spinner} from 'react-bootstrap'
 import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
-import {history} from 'app/history'
 
 class CheckoutForm extends React.Component {
 
@@ -85,6 +84,7 @@ class CheckoutForm extends React.Component {
       submitting: true,
     })
     let _this = this;
+    let history = this.props.history;
     cardSubmitFunction(clientSecret, {
       payment_method: {
         card: cardElement,

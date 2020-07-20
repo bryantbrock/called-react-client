@@ -57,7 +57,7 @@ export class EventRegistration extends Component {
             <Col sm={12} md={6} className="mt-4">
               <h2>{registrant.stripe_setup_intent ? 'Add a Card' : 'Pay With Card'}</h2>
             <Elements stripe={this.stripe}>
-              <CheckoutForm registrant={registrant} event_id={event.pk} />
+              <CheckoutForm history={this.props.history} registrant={registrant} event_id={event.pk} />
             </Elements>
             </Col>
           </Row>

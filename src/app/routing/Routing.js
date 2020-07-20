@@ -1,6 +1,7 @@
 import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 import {routes, PrivateRoute} from 'app/routing'
+import {withRouter} from 'react-router-dom'
 import {Component} from 'app/utils'
 import {Auth} from 'app/auth'
 import {connect} from 'react-redux'
@@ -21,8 +22,8 @@ export class Routing extends Component {
       <Switch>
         {routes.map((route, idx) =>
           route.private
-            ? <PrivateRoute key={idx} path={route.path} component={route.component} title={route.title} />
-            : <Route key={idx} path={route.path} component={route.component} title={route.title} />
+            ? <PrivateRoute key={idx} path={route.path} component={withRouter(route.component)} title={route.title} />
+            : <Route key={idx} path={route.path} component={withRouter(route.component)} title={route.title} />
         )}
       </Switch>
     )

@@ -6,7 +6,6 @@ import {Form} from 'react-formio';
 import {fetchEvent} from 'app/event/actions.js'
 import {createRegistrant} from '../actions.js'
 import {store} from 'store.js'
-import {history} from 'app/history'
 
 const enchanceEventRegistration = connect(
   (state, ownProps) => ({
@@ -75,9 +74,9 @@ export class EventRegistration extends Component {
     })
   }
 
-  componentDidUpdate(prevProps){
-    if(prevProps.newest !== this.props.newest){ history.push(`/event/${this.props.match.params.event_id}/pay/${this.props.newest}`) }
- }
+  componentDidUpdate(prevProps) {
+    if (prevProps.newest !== this.props.newest) {this.props.history.push(`/event/${this.props.match.params.event_id}/pay/${this.props.newest}`)}
+  }
 
   register() {
     store.dispatch(createRegistrant(this.state.registrant, this.props.auth.user.token))
