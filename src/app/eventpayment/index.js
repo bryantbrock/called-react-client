@@ -1,0 +1,1 @@
+export {default as EventPayment} from 'app/eventpayment/components/EventPayment'

@@ -4,6 +4,7 @@ import {Nav} from 'components'
 import {backgroundFetchEvent, fetchEvent, backgroundFetchRegistrants, fetchRegistrants} from '../actions.js'
 import {store} from 'store.js'
 import {Badge, Button, Col, ListGroup, ProgressBar, Row, Spinner} from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
 
 const enchanceEvent = connect(
   (state, ownProps) => ({
@@ -31,7 +32,7 @@ export class Event extends Component {
           <Col xs={12} md={6} className="bg-dark p-5 text-white">
             <div className="container text-center">
               <h1 className="mt-4 display-1">{event ? event.name : ''}</h1>
-              {event.current_registration < event.max_registration ? <Button size="lg" className="mt-4">Register Now</Button> : ''}
+              {event.current_registration < event.max_registration ? <LinkContainer to={`/event/${event.pk}/register`}><Button size="lg" className="mt-4">Register Now</Button></LinkContainer> : ''}
             </div>
           </Col>
           <Col xs={12} md={6} style={{backgroundImage: `url(${event.image_source})`}}>
@@ -45,11 +46,11 @@ export class Event extends Component {
           <h1 className='mt-5'>Your Registrations</h1>
           <ListGroup>
             {registrant_items.map((registrant, index) => <ListGroup.Item key={index}>{registrant.name}{(registrant.payment_status == 0 ? <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge> : '')}</ListGroup.Item>)}
-            <ListGroup.Item action href="#" variant="secondary">+ Register</ListGroup.Item>
+            <LinkContainer to={`/event/${event.pk}/register`}><ListGroup.Item action href="#" variant="secondary">+ Register</ListGroup.Item></LinkContainer>
           </ListGroup>
         </div>
       </div>
-    ) : <Spinner />
+    ) : <Spinner animation="border" />
   }
 }
 
