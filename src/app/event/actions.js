@@ -93,7 +93,7 @@ export function backgroundFetchRegistrants(filter={}, token) {
         response => response.data
       )
       .then(data =>
-        dispatch(receiveRegistrants(data))
+        dispatch(receiveRegistrants(data, filter))
       )
   }
 }
