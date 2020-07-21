@@ -8,13 +8,13 @@ class EventCard extends Component {
     const event = this.props.event;
     return <Card className={this.props.className}>
       <Card.Img variant="top" src={event.image_source} />
-      <Card.Body>
+      <Card.Body className="d-flex flex-column">
         <Card.Title>{event.name}</Card.Title>
         <Card.Text>
           {event.short_description}
         </Card.Text>
         <LinkContainer to={`event/${event.pk}`}>
-          <Button variant="primary">More</Button>
+          <Button className="mt-auto" variant="primary">More</Button>
         </LinkContainer>
       </Card.Body>
     </Card>
