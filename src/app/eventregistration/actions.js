@@ -43,12 +43,12 @@ export function createRegistrant(data, token) {
   }
 }
 
-export function fetchRegistrant(data, token) {
+export function fetchRegistrant(id, token) {
   return function (dispatch) {
 
-    dispatch(requestRegistrant(data))
+    dispatch(requestRegistrant(id))
 
-    return getRegistrant(data, {}, null, token)
+    return getRegistrant({}, {}, id, token)
       .then(
         response => response.data
       )
