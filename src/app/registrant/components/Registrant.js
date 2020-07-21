@@ -32,8 +32,8 @@ export class Registrant extends Component {
           <h1>{registrant.name}</h1>
           <hr />
           {registrant.payment_status == 0 && <div className="mb-5">
-            <p>Add a card to complete your registration.</p>
-            <LinkContainer to={`/event/${event.pk}/pay/${registrant.pk}`}><Button variant="primary">Add a Card</Button></LinkContainer>
+            <p>{registrant.stripe_setup_intent ? 'Add a card to complete your registration.' : 'Pay now to complete your registration.'}</p>
+            <LinkContainer to={`/event/${event.pk}/pay/${registrant.pk}`}><Button variant="primary">{registrant.stripe_setup_intent ? 'Add a Card' : 'Pay With Card'}</Button></LinkContainer>
           </div>}
           <div>
             <Form submission={{data: registrant.registration_information}} options={{readOnly: true}} form={event.registration_form} />
