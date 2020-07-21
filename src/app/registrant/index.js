@@ -1,0 +1,1 @@
+export {default as Registrant} from 'app/registrant/components/Registrant'

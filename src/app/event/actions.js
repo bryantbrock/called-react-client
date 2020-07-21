@@ -62,10 +62,11 @@ function requestRegistrants(filter) {
 
 export const RECEIVE_REGISTRANTS = 'RECEIVE_REGISTRANTS'
 
-function receiveRegistrants(data) {
+function receiveRegistrants(data, filter={}) {
   return {
     type: RECEIVE_REGISTRANTS,
     registrants: data,
+    filter: filter,
   }
 }
 
@@ -79,7 +80,7 @@ export function fetchRegistrants(filter={}, token) {
         response => response.data
       )
       .then(data =>
-        dispatch(receiveRegistrants(data))
+        dispatch(receiveRegistrants(data, filter))
       )
   }
 }
