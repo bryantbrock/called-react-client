@@ -35,7 +35,8 @@ export class EventRegistration extends Component {
     const {event, registrant} = this.props;
     const selected_plan = this.props.isFetching ? null : event.payment_plans.find(plan => plan.pk == registrant.payment_plan)
     let selected_plan_name = this.props.isFetching || !selected_plan ? '' : selected_plan.name;
-    if (registrant.discount_code && !this.props.isFetching) {
+    if (registrant.discount_code && !this.props.isFetching && selected_plan_name) {
+      console.log(selected_plan_name)
       let og_amount = /of \$(\d+\.?\d+)/g.exec(selected_plan_name)[1]
       let new_amount = (parseFloat(og_amount) * this.price_multiplier).toFixed(2)
       selected_plan_name = selected_plan_name.replace(new RegExp('of \\$' + og_amount), `of <s>$${og_amount}</s> $${new_amount}`);
@@ -51,7 +52,7 @@ export class EventRegistration extends Component {
               <h3>{registrant.discount_code ? <span><s>${event.price}</s> ${(event.price * this.price_multiplier).toFixed(2)}</span> : <span>${event.price}</span>}</h3>
               {registrant.stripe_setup_intent ?
                 <span><p>Please add a payment method now to reserve your spot. This payment method will be charged automatically.</p>
-                  <p>Based on the plan you have selected, you will be charged {selected_plan_name}. Your first payment will be charged immediately.</p></span>
+                  <p>Based on the plan you have selected, you will be charged <span dangerouslySetInnerHTML={{ __html: selected_plan_name }} />. Your first payment will be charged immediately.</p></span>
                 : <p>Please make your payment now to reserve your spot. Your card will be charged immediately.</p>}
             </Col>
             <Col sm={12} md={6} className="mt-4">

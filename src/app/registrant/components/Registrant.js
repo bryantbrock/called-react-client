@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Nav} from 'components'
-import {Button, Card, Col, Container, Row, Spinner} from 'react-bootstrap'
+import {Alert, Button, Card, Col, Container, Row, Spinner, Tab, Tabs} from 'react-bootstrap'
 import {Form} from 'react-formio';
 import {fetchEvent} from 'app/event/actions.js'
 import {createRegistrant} from 'app/eventregistration/actions.js'
@@ -17,27 +17,28 @@ const enchanceRegistrant = connect(
   }), {})
 
 export class Registrant extends Component {
-  componentDidMount() {
-    // const {event, auth} = this.props;
-    // const {event_id} = this.props.match.params
-    // store.dispatch(fetchEvent(event_id, auth.user.token))
-  }
 
   render() {
     const {event, registrant} = this.props;
+    const selected_plan = this.props.isFetching ? null : event.payment_plans.find(plan => plan.pk == registrant.payment_plan)
     return <div className="events-root">
       <Nav />
       <Container className="mt-5">
         {this.props.isFetching ? <div className="text-center"><Spinner animation="border" /></div> : <div>
           <h1>{registrant.name}</h1>
-          <hr />
-          {registrant.payment_status == 0 && <div className="mb-5">
+          {registrant.payment_status == 0 && <Alert variant="danger" className="mt-2" dismissible>
+            <Alert.Heading>Your registration is incomplete.</Alert.Heading>
             <p>{registrant.stripe_setup_intent ? 'Add a card to complete your registration.' : 'Pay now to complete your registration.'}</p>
-            <LinkContainer to={`/event/${event.pk}/pay/${registrant.pk}`}><Button variant="primary">{registrant.stripe_setup_intent ? 'Add a Card' : 'Pay With Card'}</Button></LinkContainer>
-          </div>}
-          <div>
-            <Form submission={{data: registrant.registration_information}} options={{readOnly: true}} form={event.registration_form} />
-          </div>
+            <LinkContainer to={`/event/${event.pk}/pay/${registrant.pk}`}><Button variant="light">{registrant.stripe_setup_intent ? 'Add a Card' : 'Pay With Card'}</Button></LinkContainer>
+          </Alert>}
+          <Tabs id="uncontrolled-tab-example" className="mt-5">
+            <Tab className="p-3" eventKey="registration_information" title="Registration Information">
+              <Form submission={{data: registrant.registration_information}} options={{readOnly: true}} form={event.registration_form} />
+            </Tab>
+            <Tab className="p-3" eventKey="billing" title="Billing">
+              <p><b>Payment plan:</b> {selected_plan ? selected_plan.name : 'None'}</p>
+            </Tab>
+          </Tabs>
         </div>}
       </Container>
     </div>
