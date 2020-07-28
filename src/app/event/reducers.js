@@ -55,7 +55,8 @@ export function registrantsReducer(
         isFetching: false,
         // if the results had a filter, remove only the registrants that the filter would have gotten
         // otherwise remove all the registrants, this is so that deleted registrants are removed from the frontend
-        items: action.filter.event ? [...state.items.filter(item => item.event != action.filter.event), ...action.registrants] : action.registrants
+        // except, don't remove the registrant if it is the newest one, since this may exist only on the frontend, and not on the backend for a little while
+        items: action.filter.event ? [...state.items.filter(item => item.event != action.filter.event || item.pk == state.newest), ...action.registrants] : action.registrants
       }
     default:
       return state
