@@ -3,7 +3,7 @@ import {Component} from 'app/utils'
 import {Card} from 'components'
 import {Form} from 'modules/form'
 import {SubmitButton} from 'components'
-import {history} from 'app/history'
+import history from 'app/history'
 import {sendResetEmail} from 'app/requests'
 
 const email = [{label: 'Email', name: 'email', type: 'email'}]

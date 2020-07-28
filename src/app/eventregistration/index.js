@@ -1,0 +1,1 @@
+export {default as EventRegistration} from 'app/eventregistration/components/EventRegistration'

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Component} from 'app/utils'
-import {history} from 'app/history'
+import history from 'app/history'
 
 export class Anchor extends Component {
   onClick() {
@@ -14,7 +14,7 @@ export class Anchor extends Component {
   }
   render() {
     const {children} = this.props
-
+    // eslint-disable-next-line
     return <a className="anchor" onClick={this.onClick}>{children}</a>
   }
 }

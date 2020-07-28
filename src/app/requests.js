@@ -3,7 +3,7 @@ import axios from 'axios'
 export const baseUrl = 'https://called-backend.herokuapp.com/called-backend'
 
 // Custom request creator
-const createRequest = (method, url) => (data, config = null, endpoint = null) => {
+const createRequest = (method, url) => (data, config = {}, endpoint = null, token = null) => {
 
   // This function takes a method, endoint, url, and data.
   // This will eventually need authentication, which I will 
@@ -11,7 +11,9 @@ const createRequest = (method, url) => (data, config = null, endpoint = null) =>
 
   const fullPath = endpoint ? `${baseUrl}/${url}/${endpoint}/` : `${baseUrl}/${url}/`
 
-  return axios[method](fullPath, data, config)
+  config = token ? {...config, headers: {...config.headers, authorization: `Token ${token}`}} : config
+
+  return ['post', 'put', 'patch'].includes(method) ? axios[method](fullPath, data, config) : axios[method](fullPath, config)
 }
 
 
@@ -26,3 +28,5 @@ export const getEvents = createRequest('get', 'events')
 export const postRegistrant = createRequest('post', 'registrants')
 export const getRegistrant = createRequest('get', 'registrants')
 export const getRegistrants = createRequest('get', 'registrants')
+export const validateDiscountCode = createRequest('post', 'validate-discount-code')
+export const getPaymentMethods = createRequest('get', 'payment-methods')

@@ -10,15 +10,18 @@ const enhanceRouting = connect(
 
 class PrivateRoute extends React.Component {
   render() {
-    const {isAuthenticated, children} = this.props
+    const {isAuthenticated, component: Component, ...rest} = this.props
 
-    return <Route
-      render={({ location }) =>
+    return (
+
+      // Show the component only when the user is logged in
+      // Otherwise, redirect the user to /signin page
+      <Route {...rest} render={props => (
         isAuthenticated ?
-          children : <Redirect to={{
-              pathname: "/signin",
-              state: {from: location}
-            }}/>} />
+              <Component {...props} />
+          : <Redirect to="/signin" />
+      )} />
+  );
   }
 }
 
