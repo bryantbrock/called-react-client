@@ -1,6 +1,6 @@
 import React from 'react'
 import {Component} from 'app/utils'
-import {history} from 'app/history'
+import history from 'app/history'
 
 export class Anchor extends Component {
   onClick() {

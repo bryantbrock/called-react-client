@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {signIn, signUp} from 'app/requests'
-import {history} from 'app/history'
+import history from 'app/history'
 
 const initialState = {
   token: null,
