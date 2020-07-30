@@ -5,6 +5,7 @@ import {backgroundFetchEvent, fetchEvent, backgroundFetchRegistrants, fetchRegis
 import {store} from 'store.js'
 import {Badge, Button, Col, ListGroup, ProgressBar, Row, Spinner} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
+import Countdown from 'react-countdown';
 
 const enchanceEvent = connect(
   (state, ownProps) => ({
@@ -32,6 +33,7 @@ export class Event extends Component {
           <Col xs={12} md={6} className="bg-dark p-5 text-white">
             <div className="container text-center">
               <h1 className="mt-4 display-1">{event ? event.name : ''}</h1>
+              <h1 className="mt-4 display-2"><Countdown date={event.start_date} /></h1>
               {event.current_registration < event.max_registration ? <LinkContainer to={`/event/${event.pk}/register`}><Button size="lg" className="mt-4">Register Now</Button></LinkContainer> : ''}
             </div>
           </Col>
