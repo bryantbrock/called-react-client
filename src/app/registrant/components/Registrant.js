@@ -21,6 +21,7 @@ export class Registrant extends Component {
   render() {
     const {event, registrant} = this.props;
     const selected_plan = this.props.isFetching ? null : event.payment_plans.find(plan => plan.pk == registrant.payment_plan)
+    const paymentMethod = registrant.stripe_setup_intent ? registrant.stripe_setup_intent.payment_method : null
     return <div className="events-root">
       <Nav />
       <Container className="mt-5">
@@ -37,6 +38,10 @@ export class Registrant extends Component {
             </Tab>
             <Tab className="p-3" eventKey="billing" title="Billing">
               <p><b>Payment plan:</b> {selected_plan ? selected_plan.name : 'None'}</p>
+              {registrant.stripe_setup_intent && registrant.payment_status != 0 && <Row className="p-2" noGutters>
+                <Col md="auto" className="mr-2"><img style={{height:48}} src={`/card-images/${paymentMethod.card.brand}.png`} /></Col>
+                <Col>•••• {paymentMethod.card.last4}<br /><small className="text-muted">Expires {paymentMethod.card.exp_month.toString().padStart(2, '0')}/{paymentMethod.card.exp_year}</small></Col>
+              </Row>}
             </Tab>
           </Tabs>
         </div>}
