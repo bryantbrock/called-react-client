@@ -46,7 +46,7 @@ export class Account extends Component {
             {paymentMethods.items.map((paymentMethod, index) => 
               <ListGroup.Item key={index}>
                 <Row className="p-2" noGutters>
-                  <Col md="auto" className="mr-2"><img style={{height:48}} src={`card-images/${paymentMethod.card.brand}.png`} /></Col>
+                  <Col xs="auto" className="mr-2"><img style={{height:48}} src={`card-images/${paymentMethod.card.brand}.png`} /></Col>
                   <Col>•••• {paymentMethod.card.last4}<br /><small className="text-muted">Expires {paymentMethod.card.exp_month.toString().padStart(2, '0')}/{paymentMethod.card.exp_year}</small></Col>
                 </Row>
               </ListGroup.Item>)}

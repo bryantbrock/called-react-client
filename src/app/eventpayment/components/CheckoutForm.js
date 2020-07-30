@@ -94,9 +94,9 @@ class CheckoutForm extends React.Component {
               {paymentMethods.items.map((paymentMethod, index) =>
                 <ListGroup.Item key={index}>
                   <Row className="p-2" noGutters>
-                    <Col md="auto" className="mr-2"><img style={{height: 48}} src={`/card-images/${paymentMethod.card.brand}.png`} /></Col>
+                    <Col xs="auto" md="auto" className="mr-2"><img style={{height: 48}} src={`/card-images/${paymentMethod.card.brand}.png`} /></Col>
                     <Col>•••• {paymentMethod.card.last4}<br /><small className="text-muted">Expires {paymentMethod.card.exp_month.toString().padStart(2, '0')}/{paymentMethod.card.exp_year}</small></Col>
-                    <Col md="auto" className="ml-2"><Button disabled={this.state.submitting} onClick={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup, paymentMethod.id) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment, paymentMethod.id)}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : 'Pay'}</Button></Col>
+                    <Col xs="auto" className="ml-2"><Button disabled={this.state.submitting} onClick={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup, paymentMethod.id) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment, paymentMethod.id)}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : 'Pay'}</Button></Col>
                   </Row>
                 </ListGroup.Item>)}
               <ListGroup.Item action onClick={() => this.setState({addingCard: true})}>
