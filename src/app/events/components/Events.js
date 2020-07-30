@@ -13,9 +13,8 @@ const enchanceEvents = connect(
   }), {})
 
 export class Events extends Component {
-
   componentDidMount() {
-    const {events} = this.props;
+    const {events} = this.props
     if (events == null) {
       store.dispatch(fetchEvents())
     } else {
@@ -23,9 +22,9 @@ export class Events extends Component {
       store.dispatch(backgroundFetchEvents())
     }
   }
-
   render() {
-    const {events} = this.props;
+    const {events} = this.props
+
     return (
       <div className="events-root">
         <Nav />

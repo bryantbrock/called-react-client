@@ -45,7 +45,14 @@ export class Dashboard extends Component {
             </Col>
             <Col sm={12} md={6}>
               <ListGroup className="mt-4">
-                {registrants.items.map((registrant, index) => <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}><ListGroup.Item action href="#" key={index}>{registrant.name}{(registrant.payment_status == 0 ? <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge> : '')}</ListGroup.Item></LinkContainer>)}
+                {registrants.items.map((registrant, index) =>
+                  <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}>
+                    <ListGroup.Item action href="#" key={index}>
+                      {registrant.name}
+                      {registrant.payment_status == 0 &&
+                        <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge>}
+                    </ListGroup.Item>
+                  </LinkContainer>)}
               </ListGroup>
             </Col>
           </Row>

@@ -13,26 +13,26 @@ const initialState = {
 export const Auth = createSlice({
   name: 'auth',
   initialState,
-  reducers: { 
+  reducers: {
     isLoading: state => ({...state, isLoading: true, errors: null}),
     clearErrors: state => ({...state, errors: null}),
     authFail: (state, action) => ({
-      ...state, 
+      ...state,
       isLoading: false,
       errors: action.payload,
     }),
     logout: state => ({
-      ...state, 
-      isAuthenticated: false, 
-      user: {}, 
+      ...state,
+      isAuthenticated: false,
+      user: {},
       token: null,
       errors: null,
     }),
     authSuccess: (state, action) => ({
-      ...state, 
-      user: action.payload || {}, 
-      isAuthenticated: true, 
-      isLoading: false, 
+      ...state,
+      user: action.payload || {},
+      isAuthenticated: true,
+      isLoading: false,
       token: action.payload.token,
       errors: null,
     })

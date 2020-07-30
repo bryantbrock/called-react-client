@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import Button from 'react-bootstrap/Button'
 import {Navbar, NavDropdown} from 'react-bootstrap'
 import BSNav from 'react-bootstrap/Nav'
 import {Auth} from 'app/auth/state'
@@ -7,7 +6,7 @@ import {connect} from 'react-redux'
 import {LinkContainer} from 'react-router-bootstrap'
 
 const enchanceNav = connect(
-  (state, ownProps) => ({
+  state => ({
     auth: state.auth,
   }),
   {
@@ -19,7 +18,6 @@ export class Nav extends Component {
   logout() {
     this.props.logoutUser()
   }
-
   render() {
     const {auth} = this.props
     return (
@@ -36,7 +34,9 @@ export class Nav extends Component {
             </LinkContainer>
           </BSNav>
           <NavDropdown title={auth.user.email} id="basic-nav-dropdown">
-            <LinkContainer to="/account"><NavDropdown.Item href="#">Account</NavDropdown.Item></LinkContainer>
+            <LinkContainer to="/account">
+              <NavDropdown.Item href="#">Account</NavDropdown.Item>
+            </LinkContainer>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#" onClick={() => this.logout()}>Log Out</NavDropdown.Item>
           </NavDropdown>
