@@ -35,7 +35,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "react-scripts build"
+  },
+  "engines": {
+    "node": "8.15.0",
+    "yarn": "1.21.1"
   },
   "eslintConfig": {
     "extends": "react-app"
