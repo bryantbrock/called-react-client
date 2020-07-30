@@ -56,7 +56,8 @@ export function registrantsReducer(
         // if the results had a filter, remove only the registrants that the filter would have gotten
         // otherwise remove all the registrants, this is so that deleted registrants are removed from the frontend
         // except, don't remove the registrant if it is the newest one, since this may exist only on the frontend, and not on the backend for a little while
-        items: action.filter.event ? [...state.items.filter(item => item.event != action.filter.event || item.pk == state.newest), ...action.registrants] : action.registrants
+        // had to reintroduce this bug, because I think it is actually caused by network delay for the larger request. The earlier fix though would make duplicate copies of the registrant, and not delete the newest registrant if it is actually deleted on the backend
+        items: action.filter.event ? [...state.items.filter(item => item.event != action.filter.event), ...action.registrants] : action.registrants
       }
     default:
       return state
