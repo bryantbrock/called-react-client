@@ -51,12 +51,12 @@ export class EventRegistration extends Component {
               <p className="mb-0 mt-2 lead">{event.name}</p>
               <h3>{registrant.discount_code ? <span><s>${event.price}</s> ${(event.price * this.price_multiplier).toFixed(2)}</span> : <span>${event.price}</span>}</h3>
               {registrant.stripe_setup_intent ?
-                <span><p>Please add a payment method now to reserve your spot. This payment method will be charged automatically.</p>
+                <span><p>Please add or choose a payment method now to reserve your spot. This payment method will be charged automatically.</p>
                   <p>Based on the plan you have selected, you will be charged <span dangerouslySetInnerHTML={{ __html: selected_plan_name }} />. Your first payment will be charged immediately.</p></span>
                 : <p>Please make your payment now to reserve your spot. Your card will be charged immediately.</p>}
             </Col>
             <Col sm={12} md={6} className="mt-4">
-              <h2>{registrant.stripe_setup_intent ? 'Add a Card' : 'Pay With Card'}</h2>
+              <h2>{registrant.stripe_setup_intent ? 'Add or Choose a Card' : 'Pay With Card'}</h2>
             <Elements stripe={this.stripe}>
               <CheckoutForm history={this.props.history} registrant={registrant} event_id={event.pk} />
             </Elements>
