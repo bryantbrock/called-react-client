@@ -23,7 +23,7 @@ export class Events extends Component {
       store.dispatch(backgroundFetchEvents())
     }
   }
-  
+
   render() {
     const {events} = this.props;
     return (
