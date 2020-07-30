@@ -20,6 +20,7 @@ class CheckoutForm extends React.Component {
     super(props);
     this.submitCard = this.submitCard.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.state = {
       submitting: false,
       error: '',
@@ -31,11 +32,16 @@ class CheckoutForm extends React.Component {
       name: '',
       email: '',
       addingCard: false,
+      savePaymentMethod: false,
     }
   }
 
   handleChange(e) {
     this.setState({[e.target.name]: e.target.value});
+  }
+
+  handleCheckboxChange(e) {
+    this.setState({[e.target.name]: e.target.checked});
   }
 
   render() {
@@ -47,9 +53,10 @@ class CheckoutForm extends React.Component {
             {this.state.error}
           </Alert>
         }
-        {this.state.addingCard ?
-          <form onSubmit={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment)}>
-            <a href="#" onClick={() => this.setState({addingCard: false})}>Use a saved payment method</a>
+        {this.state.addingCard || paymentMethods.items.length == 0 ?
+          <form onSubmit={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment, this.state.savePaymentMethod ? 'on_session' : false)}>
+            {paymentMethods.items.length != 0 && <a href="#" onClick={() => this.setState({addingCard: false})}>Use a saved payment method</a>}
+            <Form.Check checked={this.state.savePaymentMethod} type="checkbox" onChange={this.handleCheckboxChange} label="Save this payment method" name="savePaymentMethod" />
             <Form.Group className="mt-2">
               <Form.Control onChange={this.handleChange} value={this.state.email} name="email" type="email" placeholder="Email" required />
             </Form.Group>
@@ -87,7 +94,7 @@ class CheckoutForm extends React.Component {
                 <Form.Control name="postal_code" onChange={this.handleChange} value={this.state.postal_code} placeholder="Zip" required />
               </Form.Group>
             </Form.Row>
-            <Button type="submit" variant="primary" block disabled={this.state.submitting}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : (registrant.stripe_setup_intent ? 'Add Card' : 'Pay')}</Button>
+            <Button type="submit" variant="primary" block disabled={this.state.submitting}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : (registrant.stripe_setup_intent ? 'Add Card and Pay' : 'Pay')}</Button>
           </form> :
           <div>
             <ListGroup className="mb-5 mt-4">
@@ -96,7 +103,7 @@ class CheckoutForm extends React.Component {
                   <Row className="p-2" noGutters>
                     <Col xs="auto" md="auto" className="mr-2"><img style={{height: 48}} src={`/card-images/${paymentMethod.card.brand}.png`} /></Col>
                     <Col>•••• {paymentMethod.card.last4}<br /><small className="text-muted">Expires {paymentMethod.card.exp_month.toString().padStart(2, '0')}/{paymentMethod.card.exp_year}</small></Col>
-                    <Col xs="auto" className="ml-2"><Button disabled={this.state.submitting} onClick={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup, paymentMethod.id) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment, paymentMethod.id)}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : 'Pay'}</Button></Col>
+                    <Col md={12} lg="auto" className="mt-2 mt-lg-0"><Button disabled={this.state.submitting} onClick={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup, false, paymentMethod.id) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment, false, paymentMethod.id)}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : 'Choose Card and Pay'}</Button></Col>
                   </Row>
                 </ListGroup.Item>)}
               <ListGroup.Item action onClick={() => this.setState({addingCard: true})}>
@@ -108,7 +115,7 @@ class CheckoutForm extends React.Component {
     )
   }
 
-  submitCard(event, clientSecret, cardSubmitFunction, paymentMethod = null) {
+  submitCard(event, clientSecret, cardSubmitFunction, setupFutureUsage = false, paymentMethod = null) {
     event.preventDefault()
     const {elements, event_id} = this.props;
     const cardElement = elements.getElement(CardElement);
@@ -117,7 +124,7 @@ class CheckoutForm extends React.Component {
     })
     let _this = this;
     let history = this.props.history;
-    cardSubmitFunction(clientSecret, {
+    let props = {
       payment_method: paymentMethod ? paymentMethod : {
         card: cardElement,
         billing_details: {
@@ -132,7 +139,11 @@ class CheckoutForm extends React.Component {
           email: this.state.email,
         }
       }
-    })
+    }
+    if (setupFutureUsage) {
+      props.setup_future_usage = setupFutureUsage
+    } 
+    cardSubmitFunction(clientSecret, props)
       .then(function (result) {
         if (result.error) {
           _this.setState({
