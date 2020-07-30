@@ -1,8 +1,20 @@
 import React, {Component} from 'react'
-import {Alert, Button, Col, Container, Form, Row, Spinner} from 'react-bootstrap'
+import {connect} from 'react-redux'
+import {Alert, Button, Col, Form, ListGroup, Row, Spinner} from 'react-bootstrap'
 import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
+import {store} from 'store.js'
+import {backgroundFetchPaymentMethods} from 'app/account/actions'
+
+const enchanceCheckoutForm = connect(
+  (state, ownProps) => ({
+    auth: state.auth,
+    paymentMethods: state.paymentMethods,
+  }), {})
 
 class CheckoutForm extends React.Component {
+  componentDidMount() {
+    store.dispatch(backgroundFetchPaymentMethods(this.props.auth.user.token))
+  }
 
   constructor(props) {
     super(props);
@@ -18,6 +30,7 @@ class CheckoutForm extends React.Component {
       state: '',
       name: '',
       email: '',
+      addingCard: false,
     }
   }
 
@@ -26,57 +39,76 @@ class CheckoutForm extends React.Component {
   }
 
   render() {
-    const {registrant, stripe} = this.props;
+    const {registrant, stripe, paymentMethods} = this.props;
     return (
-      <form onSubmit={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment)}>
-        { this.state.error &&
-        <Alert variant="danger">
-          {this.state.error}
-        </Alert>
+      <div className="checkout-form-root">
+        {this.state.error &&
+          <Alert variant="danger">
+            {this.state.error}
+          </Alert>
         }
-        <Form.Group>
-          <Form.Control onChange={this.handleChange} value={this.state.email} name="email" type="email" placeholder="Email" required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Card Information</Form.Label>
-          <CardElement
-            className='form-control'
-            options={{
-              style: {
-                invalid: {
-                  color: '#9e2146',
-                },
-              },
-            }}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control name="name" onChange={this.handleChange} value={this.state.name} type="text" placeholder="Name on card" required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Billing address</Form.Label>
-          <Form.Control name="line1" onChange={this.handleChange} value={this.state.line1} type="text" placeholder="Address Line 1" required />
-        </Form.Group>
-        <Form.Group>
-          <Form.Control name="line2" onChange={this.handleChange} value={this.state.line2} type="text" placeholder="Address Line 2" />
-        </Form.Group>
-        <Form.Row>
-          <Form.Group as={Col}>
-            <Form.Control name="city" onChange={this.handleChange} value={this.state.city} placeholder="City" required />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Form.Control name="state" onChange={this.handleChange} value={this.state.state} placeholder="State" required />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Form.Control name="postal_code" onChange={this.handleChange} value={this.state.postal_code} placeholder="Zip" required />
-          </Form.Group>
-        </Form.Row>
-        <Button type="submit" variant="primary" block disabled={this.state.submitting}>{registrant.stripe_setup_intent ? 'Add Card' : 'Pay'}</Button>
-      </form>
+        {this.state.addingCard ?
+          <form onSubmit={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment)}>
+            <a href="#" onClick={() => this.setState({addingCard: false})}>Use a saved payment method</a>
+            <Form.Group className="mt-2">
+              <Form.Control onChange={this.handleChange} value={this.state.email} name="email" type="email" placeholder="Email" required />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Card Information</Form.Label>
+              <CardElement
+                className='form-control'
+                options={{
+                  style: {
+                    invalid: {
+                      color: '#9e2146',
+                    },
+                  },
+                }}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control name="name" onChange={this.handleChange} value={this.state.name} type="text" placeholder="Name on card" required />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Billing address</Form.Label>
+              <Form.Control name="line1" onChange={this.handleChange} value={this.state.line1} type="text" placeholder="Address Line 1" required />
+            </Form.Group>
+            <Form.Group>
+              <Form.Control name="line2" onChange={this.handleChange} value={this.state.line2} type="text" placeholder="Address Line 2" />
+            </Form.Group>
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Control name="city" onChange={this.handleChange} value={this.state.city} placeholder="City" required />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Control name="state" onChange={this.handleChange} value={this.state.state} placeholder="State" required />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Control name="postal_code" onChange={this.handleChange} value={this.state.postal_code} placeholder="Zip" required />
+              </Form.Group>
+            </Form.Row>
+            <Button type="submit" variant="primary" block disabled={this.state.submitting}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : (registrant.stripe_setup_intent ? 'Add Card' : 'Pay')}</Button>
+          </form> :
+          <div>
+            <ListGroup className="mb-5 mt-4">
+              {paymentMethods.items.map((paymentMethod, index) =>
+                <ListGroup.Item key={index}>
+                  <Row className="p-2" noGutters>
+                    <Col md="auto" className="mr-2"><img style={{height: 48}} src={`/card-images/${paymentMethod.card.brand}.png`} /></Col>
+                    <Col>•••• {paymentMethod.card.last4}<br /><small className="text-muted">Expires {paymentMethod.card.exp_month.toString().padStart(2, '0')}/{paymentMethod.card.exp_year}</small></Col>
+                    <Col md="auto" className="ml-2"><Button disabled={this.state.submitting} onClick={(event) => registrant.stripe_setup_intent ? this.submitCard(event, registrant.stripe_setup_intent.client_secret, stripe.confirmCardSetup, paymentMethod.id) : this.submitCard(event, registrant.stripe_payment_intent.client_secret, stripe.confirmCardPayment, paymentMethod.id)}>{this.state.submitting ? <Spinner size="sm" animation="border" /> : 'Pay'}</Button></Col>
+                  </Row>
+                </ListGroup.Item>)}
+              <ListGroup.Item action onClick={() => this.setState({addingCard: true})}>
+                <p className="mt-2">Add a payment method</p>
+              </ListGroup.Item>
+            </ListGroup>
+          </div>}
+      </div>
     )
   }
 
-  submitCard(event, clientSecret, cardSubmitFunction) {
+  submitCard(event, clientSecret, cardSubmitFunction, paymentMethod = null) {
     event.preventDefault()
     const {elements, event_id} = this.props;
     const cardElement = elements.getElement(CardElement);
@@ -86,7 +118,7 @@ class CheckoutForm extends React.Component {
     let _this = this;
     let history = this.props.history;
     cardSubmitFunction(clientSecret, {
-      payment_method: {
+      payment_method: paymentMethod ? paymentMethod : {
         card: cardElement,
         billing_details: {
           address: {
@@ -132,4 +164,4 @@ function inject(CheckoutForm) {
   }
 }
 
-export default inject(CheckoutForm)
+export default enchanceCheckoutForm(inject(CheckoutForm))
