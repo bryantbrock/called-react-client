@@ -1,38 +1,55 @@
-import React from 'react'
-import {Component} from 'app/utils'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Button, Nav, Display} from 'components'
-import {Auth} from 'app/auth/state'
+import {Nav} from 'components'
+import {Badge, Col, ListGroup, Row} from 'react-bootstrap'
+import EventCard from 'components/EventCard.js'
+import {backgroundFetchEvents, fetchEvents} from 'app/events/actions.js'
+import {backgroundFetchRegistrants, fetchRegistrants} from 'app/event/actions.js'
+import {store} from 'store.js'
+import {LinkContainer} from 'react-router-bootstrap'
 
 const enchanceDashboard = connect(
-  null,
-  {
-    logoutUser: Auth.actions.logout,
-  }
-)
+  state => ({
+    events: state.events.items.map(item => item),
+    auth: state.auth,
+    registrants: state.registrants,
+  }), {})
 
 export class Dashboard extends Component {
-  logout() {
-    this.props.logoutUser()
-  }
-  render() {
 
+  componentDidMount() {
+    const {events, auth, registrants} = this.props;
+    registrants == null ? store.dispatch(fetchRegistrants({}, auth.user.token)) : store.dispatch(backgroundFetchRegistrants({}, auth.user.token))
+    if (events == null) {
+      store.dispatch(fetchEvents())
+    } else {
+      // update events in background
+      store.dispatch(backgroundFetchEvents())
+    }
+  }
+
+  render() {
+    const {events, registrants} = this.props;
     return (
-      <div className="dashboard-root">
+      <div className="events-root">
         <Nav />
-        <Display /> 
-        <span>
-          Inflation Monitor Dashboard<br></br><br></br>
-          This will show current Reported Inflation,<br></br>
-          Masked inflation (based on falling prices due to <br></br>
-          corperate productivity, exporting labor, and <br></br>
-          other ways to lower prices), and asset inflation <br></br>
-          (if I can get ahold of any data on that). Finally that will<br></br>
-          give you an accurate picture of inflation and possible bubbles.
-        </span>
-        <Button
-          className="outlined w-200"
-          onClick={() => this.logout()}>Logout</Button>
+        <div className="container">
+          <Row>
+            <Col sm={12} md={6}>
+              <h1 className="mt-4">Featured Events</h1>
+              <Row>
+                {events.filter(event => event.featured == true).map((event, index) => {
+                  return <Col sm={12} className="mt-4" key={index}><EventCard className="h-100" event={event} /></Col>
+                })}
+              </Row>
+            </Col>
+            <Col sm={12} md={6}>
+              <ListGroup className="mt-4">
+                {registrants.items.map((registrant, index) => <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}><ListGroup.Item action href="#" key={index}>{registrant.name}{(registrant.payment_status == 0 ? <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge> : '')}</ListGroup.Item></LinkContainer>)}
+              </ListGroup>
+            </Col>
+          </Row>
+        </div>
       </div>
     )
   }
