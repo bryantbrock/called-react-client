@@ -21,9 +21,17 @@ export class Routing extends Component {
     return (
       <Switch>
         {routes.map((route, idx) =>
-          route.private
-            ? <PrivateRoute key={idx} path={route.path} component={withRouter(route.component)} title={route.title} />
-            : <Route key={idx} path={route.path} component={withRouter(route.component)} title={route.title} />
+          !route.public
+            ? <PrivateRoute
+                key={idx}
+                path={route.path}
+                component={withRouter(route.component)}
+                title={route.title} />
+            : <Route
+                key={idx}
+                path={route.path}
+                component={withRouter(route.component)}
+                title={route.title} />
         )}
       </Switch>
     )

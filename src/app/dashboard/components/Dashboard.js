@@ -20,7 +20,7 @@ export class Dashboard extends Component {
     return (
       <div className="dashboard-root">
         <Nav />
-        <Display /> 
+        <Display />
         <span>
           Inflation Monitor Dashboard<br></br><br></br>
           This will show current Reported Inflation,<br></br>
