@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Nav} from 'components'
-import {Badge, Col, ListGroup, Row} from 'react-bootstrap'
+import {Badge, Col, ListGroup, Row, Spinner} from 'react-bootstrap'
 import EventCard from 'components/EventCard.js'
 import {backgroundFetchEvents, fetchEvents} from 'app/events/actions.js'
 import {backgroundFetchRegistrants, fetchRegistrants} from 'app/event/actions.js'
@@ -19,7 +19,7 @@ export class Dashboard extends Component {
 
   componentDidMount() {
     const {events, auth, registrants} = this.props;
-    registrants == null ? store.dispatch(fetchRegistrants({}, auth.user.token)) : store.dispatch(backgroundFetchRegistrants({}, auth.user.token))
+    registrants.items.length == 0 ? store.dispatch(fetchRegistrants({}, auth.user.token)) : store.dispatch(backgroundFetchRegistrants({}, auth.user.token))
     if (events == null) {
       store.dispatch(fetchEvents())
     } else {
@@ -44,16 +44,20 @@ export class Dashboard extends Component {
               </Row>
             </Col>
             <Col sm={12} md={6}>
-              <ListGroup className="mt-4">
-                {registrants.items.map((registrant, index) =>
-                  <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}>
-                    <ListGroup.Item action href="#" key={index}>
-                      {registrant.name}
-                      {registrant.payment_status == 0 &&
-                        <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge>}
-                    </ListGroup.Item>
-                  </LinkContainer>)}
-              </ListGroup>
+              {registrants.isFetching ?
+                <div className="text-center">
+                  <Spinner animation="border" className="my-5" />
+                </div> :
+                <ListGroup className="mt-4 mb-5">
+                  {registrants.items.map((registrant, index) =>
+                    <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}>
+                      <ListGroup.Item action href="#" key={index}>
+                        {registrant.name}
+                        {registrant.payment_status == 0 &&
+                          <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge>}
+                      </ListGroup.Item>
+                    </LinkContainer>)}
+                </ListGroup>}
             </Col>
           </Row>
         </div>
