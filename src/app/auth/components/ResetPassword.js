@@ -23,17 +23,19 @@ export class ResetPassword extends Component {
   render() {
     const {loading} = this.state
     return <div className="login-root">
-      <Card>
-        <h3 className="mb-2">Forgot Password</h3>
-        <p className="text-muted text-center pb-2">
-          We will send you an email with a <br /> pin for confirmation.
+      <div className="mx-auto min-vh-100 d-flex justify-content-center align-items-center" style={{maxWidth: '512px'}}>
+        <div className="shadow p-5 bg-white rounded text-center w-100">
+          <h3 className="mb-2">Forgot Password</h3>
+          <p className="text-muted text-center pb-2">
+            We will send you an email with a <br /> pin for confirmation.
         </p>
-        <Form
-          onSubmit={this.onSubmit}
-          fields={email}>
-          <SubmitButton isLoading={loading}>Send Email</SubmitButton>
-        </Form>
-      </Card>
+          <Form
+            onSubmit={this.onSubmit}
+            fields={email}>
+            <SubmitButton isLoading={loading}>Send Email</SubmitButton>
+          </Form>
+        </div>
+      </div>
     </div>
   }
 }
