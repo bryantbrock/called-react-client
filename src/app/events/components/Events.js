@@ -9,7 +9,7 @@ import {store} from 'store.js'
 
 const enchanceEvents = connect(
   state => ({
-    events: state.events.items.map(item => item),
+    events: state.events.items,
   }), {})
 
 export class Events extends Component {

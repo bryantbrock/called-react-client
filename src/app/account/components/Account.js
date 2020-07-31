@@ -43,7 +43,7 @@ export class Account extends Component {
           <h2 className="mt-5 mb-4">Payment Methods</h2>
           {paymentMethods.isFetching ? <div className="text-center"><Spinner animation="border" /></div> : <div>
             <ListGroup className="mb-5">
-            {paymentMethods.items.map((paymentMethod, index) => 
+            {paymentMethods.items.map((paymentMethod, index) =>
               <ListGroup.Item key={index}>
                 <Row className="p-2" noGutters>
                   <Col xs="auto" className="mr-2"><img style={{height:48}} src={`card-images/${paymentMethod.card.brand}.png`} /></Col>
