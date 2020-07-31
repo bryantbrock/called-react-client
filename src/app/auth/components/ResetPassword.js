@@ -1,6 +1,6 @@
 import React from 'react'
 import {Component} from 'app/utils'
-import {Card} from 'components'
+import {Container, Card} from 'components'
 import {Form} from 'modules/form'
 import {SubmitButton} from 'components'
 import history from 'app/history'
@@ -22,21 +22,20 @@ export class ResetPassword extends Component {
   }
   render() {
     const {loading} = this.state
-    return <div className="login-root">
-      <div className="mx-auto min-vh-100 d-flex justify-content-center align-items-center" style={{maxWidth: '512px'}}>
-        <div className="shadow p-5 bg-white rounded text-center w-100">
-          <h3 className="mb-2">Forgot Password</h3>
-          <p className="text-muted text-center pb-2">
-            We will send you an email with a <br /> pin for confirmation.
+
+    return <Container>
+      <Card>
+        <h3 className="mb-2">Forgot Password</h3>
+        <p className="text-muted text-center pb-2">
+          We will send you an email with a <br /> pin for confirmation.
         </p>
-          <Form
-            onSubmit={this.onSubmit}
-            fields={email}>
-            <SubmitButton isLoading={loading}>Send Email</SubmitButton>
-          </Form>
-        </div>
-      </div>
-    </div>
+        <Form
+          onSubmit={this.onSubmit}
+          fields={email}>
+          <SubmitButton isLoading={loading}>Send Email</SubmitButton>
+        </Form>
+      </Card>
+    </Container>
   }
 }
 

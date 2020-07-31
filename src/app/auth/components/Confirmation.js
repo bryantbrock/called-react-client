@@ -2,7 +2,7 @@ import React from 'react'
 import {Component} from 'app/utils'
 import {Alert} from 'react-bootstrap'
 import {Form} from 'modules/form'
-import {SubmitButton} from 'components'
+import {SubmitButton, Container, Card} from 'components'
 import {confirmPin, setNewPassword} from 'app/requests'
 import history from 'app/history'
 
@@ -49,38 +49,37 @@ export class Confirmation extends Component {
       isConfirmed, loading, success, confirmationFailed,
     } = this.state
 
-    return <div className="login-root">
-      <div className="mx-auto min-vh-100 d-flex justify-content-center align-items-center" style={{maxWidth: '512px'}}>
-        {!isConfirmed ?
-          <div className="shadow p-5 bg-white rounded text-center w-100">
-            <h3 className="mb-2">Confirmation</h3>
-            <p className="text-muted text-center pb-2">
-              Enter the pin found in the email we sent you.
-            </p>
-            {confirmationFailed && <Alert variant="danger">Invalid pin. Please try again.</Alert>}
-            <Form
-              onSubmit={this.onPinSubmit}
-              fields={pin}>
-              <SubmitButton variant={success ? "success" : "primary"} isLoading={loading}>
-                {!success ? 'Submit' : <i class="fas fa-check" />}
-              </SubmitButton>
-            </Form>
-          </div> : <div className="shadow p-5 bg-white rounded text-center w-100">
-            <h3 className="mb-3">Reset Password</h3>
-            <p className="text-muted text-center pb-2">
-              Enter a new password.
-            </p>
-            {confirmationFailed && <Alert variant="danger">Passwords do not match. Please try again.</Alert>}
-            <Form
-              onSubmit={this.onPasswordSubmit}
-              fields={resetPassword}>
-              <SubmitButton variant={success ? "success" : "primary"} isLoading={loading}>
-                {!success ? 'Save' : <i class="fas fa-check" />}
-              </SubmitButton>
-            </Form>
-          </div>}
-      </div>
-    </div>
+    return <Container align="center" justify="center">
+      {!isConfirmed ?
+        <Card>
+          <h3 className="mb-2">Confirmation</h3>
+          <p className="text-muted text-center pb-2">
+            Enter the pin found in the email we sent you.
+          </p>
+          {confirmationFailed && <Alert variant="danger">Invalid pin. Please try again.</Alert>}
+          <Form
+            onSubmit={this.onPinSubmit}
+            fields={pin}>
+            <SubmitButton variant={success ? "success" : "primary"} isLoading={loading}>
+              {!success ? 'Submit' : <i class="fas fa-check" />}
+            </SubmitButton>
+          </Form>
+        </Card> :
+        <Card>
+          <h3 className="mb-3">Reset Password</h3>
+          <p className="text-muted text-center pb-2">
+            Enter a new password.
+          </p>
+          {confirmationFailed && <Alert variant="danger">Passwords do not match. Please try again.</Alert>}
+          <Form
+            onSubmit={this.onPasswordSubmit}
+            fields={resetPassword}>
+            <SubmitButton variant={success ? "success" : "primary"} isLoading={loading}>
+              {!success ? 'Save' : <i class="fas fa-check" />}
+            </SubmitButton>
+          </Form>
+        </Card>}
+      </Container>
   }
 }
 
