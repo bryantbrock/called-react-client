@@ -34,9 +34,9 @@ export class Dashboard extends Component {
       <div className="events-root">
         <Nav />
         <div className="container">
+          <h1 className="mt-4">Featured Events</h1>
           <Row>
             <Col sm={12} md={6}>
-              <h1 className="mt-4">Featured Events</h1>
               <Row>
                 {events.filter(event => event.featured == true).map((event, index) => {
                   return <Col sm={12} className="mt-4" key={index}><EventCard className="h-100" event={event} /></Col>
