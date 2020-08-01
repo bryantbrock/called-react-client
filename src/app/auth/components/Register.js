@@ -1,4 +1,5 @@
-import React, {Component} from 'react'
+import React from 'react'
+import {Component} from 'app/utils'
 import {connect} from 'react-redux'
 import {authenticate} from 'app/auth/state'
 import {registerFields} from 'app/auth/constants'
@@ -10,11 +11,11 @@ const authEnhancer = connect(
   state => ({
     loading: state.auth.isLoading,
     errors: state.auth.errors,
-  }))
+  }), {authenticate})
 
 export class Register extends Component {
   render() {
-    const {loading, errors, history} = this.props
+    const {loading, authenticate, errors, history} = this.props
 
     return <Container>
       <Card>

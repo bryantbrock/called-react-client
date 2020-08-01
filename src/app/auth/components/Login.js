@@ -11,11 +11,11 @@ const authEnhancer = connect(
   state => ({
     loading: state.auth.isLoading,
     errors: state.auth.errors,
-  }))
+  }), {authenticate})
 
 class Login extends Component {
   render() {
-    const {loading, errors, history} = this.props
+    const {loading, authenticate, errors, history} = this.props
 
     return <Container>
       <Card>
