@@ -3,7 +3,7 @@ import classNames from 'classnames'
 
 export default ({
   children,
-  mw = "100",
+  mw = "512px",
   align = "center",
   justify = "center"
 }) => {
@@ -15,7 +15,7 @@ export default ({
     `align-items-${align}`,
   )
 
-  return <div className={className} style={{maxWidth: `${mw}px`}}>
+  return <div className={className} style={{maxWidth: mw}}>
     {children}
   </div>
 }
