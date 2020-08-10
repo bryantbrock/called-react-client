@@ -11,11 +11,16 @@ const authEnhancer = connect(
   state => ({
     loading: state.auth.isLoading,
     errors: state.auth.errors,
+    isAuthenticated: state.auth.isAuthenticated,
   }), {authenticate})
 
 class Login extends Component {
   render() {
-    const {loading, authenticate, errors, history} = this.props
+    const {loading, authenticate, errors, history, isAuthenticated} = this.props
+    if (isAuthenticated) {
+      history.push('/dashboard')
+      return <div></div>
+    }
 
     return <Container>
         <Card className="m-3">
