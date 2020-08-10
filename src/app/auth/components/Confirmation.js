@@ -51,7 +51,7 @@ export class Confirmation extends Component {
 
     return <Container align="center" justify="center">
       {!isConfirmed ?
-        <Card>
+        <Card className="m-3">
           <h3 className="mb-2">Confirmation</h3>
           <p className="text-muted text-center pb-2">
             Enter the pin found in the email we sent you.
