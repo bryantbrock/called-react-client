@@ -22,7 +22,9 @@ export class Nav extends Component {
     const {auth} = this.props
     return (
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#">NSA Event Registration</Navbar.Brand>
+        <LinkContainer to="/dashboard">
+          <Navbar.Brand>NSA Event Registration</Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <BSNav className="mr-auto">
