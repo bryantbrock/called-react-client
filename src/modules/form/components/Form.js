@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropType from 'prop-types'
 import {toObj} from 'utils/misc'
 import {Anchor} from 'components'
-import {Form as BSForm} from 'components/bootstrap'
+import {Form as BSForm} from 'react-bootstrap'
 
 class Form extends Component {
 
@@ -18,13 +18,13 @@ class Form extends Component {
   renderFields(fields) {
     return fields.map(({label, name, type}) =>
       <BSForm.Group key={name}>
-        <BSForm.Control 
+        <BSForm.Control
           type={type}
           placeholder={label}
           name={name}
           value={this.state[name]}
           onChange={e => this.onChange(e)} />
-        {(name === 'password' && this.props.resetPassword) && 
+        {(name === 'password' && this.props.resetPassword) &&
           <BSForm.Text className="text-muted text-right">
             <Anchor onClick="/reset-password">
               Forgot Password?

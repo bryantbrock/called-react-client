@@ -12,7 +12,7 @@ export const getToken = getState => {
     }
   }
 
-  // If token, add to headers 
+  // If token, add to headers
   if(token) {
     config.headers['x-auth-token'] = token
   }
@@ -27,7 +27,7 @@ export class Component extends PureComponent {
 
     autoBind(this)
   }
-  componentWillMount() {
-    document.title = this.props.title;
-  }
+  // componentWillMount() {
+  //   document.title = this.props.title;
+  // }
 }
