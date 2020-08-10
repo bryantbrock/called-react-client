@@ -5,7 +5,8 @@
         {
             "src": "/icon.png",
             "sizes": "833x833",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ],
     "start_url": "/signin",
