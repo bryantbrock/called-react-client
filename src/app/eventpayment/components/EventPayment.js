@@ -21,7 +21,7 @@ export class EventRegistration extends Component {
   constructor(props) {
     super(props);
     this.price_multiplier = this.props.registrant.discount_code ? 1 - (this.props.registrant.discount_code.amount / 100) : 1;
-    this.stripe = loadStripe('pk_test_BJoAep1mAm2egz6kzXipBNYl');
+    this.stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
   }
 
   componentDidMount() {
