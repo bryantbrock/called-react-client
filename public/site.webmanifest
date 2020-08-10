@@ -11,6 +11,6 @@
     ],
     "start_url": "/signin",
     "theme_color": "#0d3666",
-    "background_color": "#ffffff",
+    "background_color": "#0d3666",
     "display": "standalone"
 }
