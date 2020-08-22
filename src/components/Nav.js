@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Navbar, NavDropdown} from 'react-bootstrap'
+import {Navbar, NavDropdown, Container} from 'react-bootstrap'
 import BSNav from 'react-bootstrap/Nav'
 import {Auth} from 'app/auth/state'
 import {connect} from 'react-redux'
@@ -20,8 +20,8 @@ export class Nav extends Component {
   }
   render() {
     const {auth} = this.props
-    return (
-      <Navbar bg="light" expand="lg">
+    return <Navbar bg="light" expand="lg">
+      <Container>
         <LinkContainer to="/dashboard">
           <Navbar.Brand>NSA Event Registration</Navbar.Brand>
         </LinkContainer>
@@ -43,8 +43,8 @@ export class Nav extends Component {
             <NavDropdown.Item href="#" onClick={() => this.logout()}>Log Out</NavDropdown.Item>
           </NavDropdown>
         </Navbar.Collapse>
-      </Navbar>
-    )
+      </Container>
+    </Navbar>
   }
 }
 
