@@ -31,9 +31,13 @@ export class Events extends Component {
         <div className="container">
           <h1 className="mt-4">Events</h1>
           <Row>
-          {events.map((event, index) => {
-            return <Col sm={12} md={6} lg={4} className="mt-4" key={index}><EventCard className="h-100" event={event} /></Col>
-          })}
+          {false ? events.map((event, index) =>
+            <Col sm={12} md={6} lg={4} className="mt-4" key={index}>
+              <EventCard className="h-100" event={event} />
+            </Col>) :
+            <Col sm={12} md={6} lg={4} className="mt-4">
+              <span class="text-center">You are not registered for any upcoming events.</span>
+            </Col>}
           </Row>
         </div>
       </div>

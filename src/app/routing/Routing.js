@@ -1,10 +1,11 @@
 import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-import {routes} from 'app/routing'
+import {routes, urls} from 'app/routing'
 import {withRouter} from 'react-router-dom'
 import {Component} from 'app/utils'
 import {Auth} from 'app/auth'
 import {connect} from 'react-redux'
+import history from 'app/history'
 
 const enhancer = connect(
   state => ({
@@ -17,6 +18,10 @@ const enhancer = connect(
 
 export class Routing extends Component {
   componentDidMount() {
+    if (!urls.includes(window.location.pathname)) {
+      history.push('/404')
+    }
+
     this.props.clearErrors()
   }
   renderPrivateRoute(route, idx) {
@@ -24,6 +29,7 @@ export class Routing extends Component {
 
     return isAuthenticated ?
       <Route
+        exact={route.notExact ? false : true}
         key={idx}
         path={route.path}
         component={withRouter(route.component)}
@@ -37,6 +43,7 @@ export class Routing extends Component {
           !route.public
             ? this.renderPrivateRoute(route, idx)
             : <Route
+                exact={route.notExact ? false : true}
                 key={idx}
                 path={route.path}
                 component={withRouter(route.component)}
