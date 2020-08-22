@@ -21,7 +21,7 @@ export class EventRegistration extends Component {
   constructor(props) {
     super(props);
     this.price_multiplier = this.props.registrant.discount_code ? 1 - (this.props.registrant.discount_code.amount / 100) : 1;
-    this.stripe = loadStripe('pk_test_BJoAep1mAm2egz6kzXipBNYl');
+    this.stripe = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
   }
 
   componentDidMount() {
@@ -35,8 +35,13 @@ export class EventRegistration extends Component {
     const {event, registrant} = this.props;
     const selected_plan = this.props.isFetching ? null : event.payment_plans.find(plan => plan.pk == registrant.payment_plan)
     let selected_plan_name = this.props.isFetching || !selected_plan ? '' : selected_plan.name;
+    if (!this.props.isFetching) {
+      let price = registrant.discount_code ? (event.price * this.price_multiplier).toFixed(2) : event.price
+      if (price == 0) {
+        this.props.history.push(`/event/${this.props.match.params.event_id}`)
+      }
+    }
     if (registrant.discount_code && !this.props.isFetching && selected_plan_name) {
-      console.log(selected_plan_name)
       let og_amount = /of \$(\d+\.?\d+)/g.exec(selected_plan_name)[1]
       let new_amount = (parseFloat(og_amount) * this.price_multiplier).toFixed(2)
       selected_plan_name = selected_plan_name.replace(new RegExp('of \\$' + og_amount), `of <s>$${og_amount}</s> $${new_amount}`);

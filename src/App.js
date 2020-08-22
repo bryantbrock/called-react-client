@@ -10,6 +10,7 @@ import './resources/css/main.scss'
 import '@fortawesome/fontawesome-free/css/all.css'
 import { Router, Route } from 'react-router-dom'
 import {Event} from 'app/event'
+import ScrollToTop from 'components/ScrollToTop'
 
 class App extends React.Component {
   render() {
@@ -17,6 +18,7 @@ class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router history={history}>
+            <ScrollToTop />
             <Routing />
           </Router>
         </PersistGate>

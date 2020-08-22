@@ -18,7 +18,7 @@ export class Register extends Component {
     const {loading, authenticate, errors, history} = this.props
 
     return <Container>
-      <Card>
+      <Card className="m-3">
         <h1 className="mb-3">Sign Up</h1>
         {errors && Object.values(errors).map((value, idx) =>
           <Alert key={idx} variant="danger">{value}</Alert>

@@ -26,7 +26,7 @@ export class ResetPassword extends Component {
     const {loading, failed} = this.state
 
     return <Container>
-      <Card>
+      <Card className="m-3">
         <h3 className="mb-2">Forgot Password</h3>
         <p className="text-muted text-center pb-2">
           We will send you an email with a <br /> pin for confirmation.

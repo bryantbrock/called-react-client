@@ -11,25 +11,30 @@ const authEnhancer = connect(
   state => ({
     loading: state.auth.isLoading,
     errors: state.auth.errors,
+    isAuthenticated: state.auth.isAuthenticated,
   }), {authenticate})
 
 class Login extends Component {
   render() {
-    const {loading, authenticate, errors, history} = this.props
+    const {loading, authenticate, errors, history, isAuthenticated} = this.props
+    if (isAuthenticated) {
+      history.push('/dashboard')
+      return <div></div>
+    }
 
     return <Container>
-      <Card>
-        <h1 className="mb-3">Sign In</h1>
-        {errors && Object.values(errors).map((value, idx) =>
-          <Alert key={idx} variant="danger">{value}</Alert>)}
-        <Form
-          onSubmit={data => authenticate(data, true)}
-          resetPassword={true}
-          fields={loginFields}>
-          <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
-          <Button block size="sm" variant="outline-secondary" onClick={() => history.push('/signup')}>Don't have an Account? Sign up</Button>
-        </Form>
-      </Card>
+        <Card className="m-3">
+          <h1 className="mb-3">Sign In</h1>
+          {errors && Object.values(errors).map((value, idx) =>
+            <Alert key={idx} variant="danger">{value}</Alert>)}
+          <Form
+            onSubmit={data => authenticate(data, true)}
+            resetPassword={true}
+            fields={loginFields}>
+            <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
+            <Button block size="sm" variant="outline-secondary" onClick={() => history.push('/signup')}>Don't have an Account? Sign up</Button>
+          </Form>
+        </Card>
     </Container>
   }
 }

@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "edu.nsa.events",
+                   "sha256_cert_fingerprints": ["EB:FA:CD:B5:10:F8:FB:74:D4:F1:60:4F:ED:61:6E:88:6D:F3:D3:62:4D:B3:FC:89:8C:0C:CC:5E:D4:AD:E2:41"] }
+    }]
