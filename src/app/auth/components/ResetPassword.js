@@ -5,12 +5,14 @@ import {Form} from 'modules/form'
 import {SubmitButton} from 'components'
 import history from 'app/history'
 import {sendResetEmail} from 'app/requests'
+import {Alert} from 'react-bootstrap'
 
 const email = [{label: 'Email', name: 'email', type: 'email'}]
 
 export class ResetPassword extends Component {
   state = {
     loading: false,
+    failed: false,
   }
   async onSubmit(data) {
     this.setState({loading: true})
@@ -18,10 +20,10 @@ export class ResetPassword extends Component {
     await sendResetEmail(data)
       .then(() => history.push('/confirm-reset'))
       .then(() => this.setState({loading: false}))
-      .catch(err => 'no user exists with that email error')
+      .catch(err => this.setState({loading: false, failed: true}))
   }
   render() {
-    const {loading} = this.state
+    const {loading, failed} = this.state
 
     return <Container>
       <Card>
@@ -29,6 +31,7 @@ export class ResetPassword extends Component {
         <p className="text-muted text-center pb-2">
           We will send you an email with a <br /> pin for confirmation.
         </p>
+        {failed && <Alert variant="danger">No account was found with that email.</Alert>}
         <Form
           onSubmit={this.onSubmit}
           fields={email}>
