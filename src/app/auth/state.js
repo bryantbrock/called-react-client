@@ -45,7 +45,7 @@ export const authenticate = (user, signin = false) => async dispatch => {
 
   await (signin ? signIn(user) : signUp(user))
     .then(res => dispatch(Auth.actions.authSuccess(res.data)))
-    .then(() => history.push('/dashboard'))
+    .then(() => history.push('/'))
     .catch(err => dispatch(Auth.actions.authFail(err.response.data)))
 }
 

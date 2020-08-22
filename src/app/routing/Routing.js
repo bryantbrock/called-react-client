@@ -19,6 +19,7 @@ const enhancer = connect(
 export class Routing extends Component {
   componentDidMount() {
     if (!urls.includes(window.location.pathname)) {
+      console.log(window.location.pathname)
       history.push('/404')
     }
 

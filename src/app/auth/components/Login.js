@@ -6,6 +6,7 @@ import {loginFields} from 'app/auth/constants'
 import {SubmitButton, Container, Card} from 'components'
 import {Alert, Button} from 'react-bootstrap'
 import {Form} from 'modules/form'
+import history from 'app/history'
 
 const authEnhancer = connect(
   state => ({
@@ -15,12 +16,13 @@ const authEnhancer = connect(
   }), {authenticate})
 
 class Login extends Component {
-  render() {
-    const {loading, authenticate, errors, history, isAuthenticated} = this.props
-    if (isAuthenticated) {
-      history.push('/dashboard')
-      return <div></div>
+  componentDidMount() {
+    if (this.props.isAuthenticated) {
+      history.push('/')
     }
+  }
+  render() {
+    const {loading, authenticate, errors, history} = this.props
 
     return <Container>
         <Card className="m-3">

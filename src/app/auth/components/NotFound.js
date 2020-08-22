@@ -4,7 +4,6 @@ import {Nav} from 'components'
 
 export class NotFound extends Component {
   render() {
-    console.log('222')
     return <div>
       <Nav />
       <Container>
