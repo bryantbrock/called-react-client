@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Nav} from 'components'
-import {Badge, Col, ListGroup, Row, Spinner} from 'react-bootstrap'
+import {Badge, Col, ListGroup, Row, Spinner, ListGroupItem} from 'react-bootstrap'
 import EventCard from 'components/EventCard.js'
 import {backgroundFetchEvents, fetchEvents} from 'app/events/actions.js'
 import {backgroundFetchRegistrants, fetchRegistrants} from 'app/event/actions.js'
@@ -30,6 +30,7 @@ export class Dashboard extends Component {
 
   render() {
     const {events, registrants} = this.props;
+
     return (
       <div className="events-root">
         <Nav />
@@ -38,9 +39,10 @@ export class Dashboard extends Component {
           <Row>
             <Col sm={12} md={6}>
               <Row>
-                {events.filter(event => event.featured == true).map((event, index) => {
-                  return <Col sm={12} className="mt-4" key={index}><EventCard className="h-100" event={event} /></Col>
-                })}
+                {events.filter(event => event.featured == true).map((event, index) =>
+                  <Col sm={12} className="mt-4" key={index}>
+                    <EventCard className="h-100" event={event} />
+                  </Col>)}
               </Row>
             </Col>
             <Col sm={12} md={6}>
@@ -49,14 +51,19 @@ export class Dashboard extends Component {
                   <Spinner animation="border" className="my-5" />
                 </div> :
                 <ListGroup className="mt-4 mb-5">
-                  {registrants.items.map((registrant, index) =>
+                  {registrants.items.length > 0 ? registrants.items.map((registrant, index) =>
                     <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}>
                       <ListGroup.Item action href="#" key={index}>
                         {registrant.name}
                         {registrant.payment_status == 0 &&
                           <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge>}
                       </ListGroup.Item>
-                    </LinkContainer>)}
+                    </LinkContainer>) :
+                    <LinkContainer to="/events">
+                      <ListGroupItem>
+                        <div className="text-center">You are not registered for any upcoming events.</div>
+                      </ListGroupItem>
+                    </LinkContainer>}
                 </ListGroup>}
             </Col>
           </Row>

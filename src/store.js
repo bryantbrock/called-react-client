@@ -6,6 +6,7 @@ import {createLogger} from 'redux-logger'
 import storage from 'redux-persist/lib/storage'
 
 const logger = createLogger({
+  predicate: (getState, action) => process.env.NODE_ENV !== 'production',
   diff: true,
   collapsed: true,
   colors: {

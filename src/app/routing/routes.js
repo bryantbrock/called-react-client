@@ -12,12 +12,15 @@ import {Account} from 'app/account'
 // if the route is to be a public route or not
 
 export const routes = [
-  {title: '404', path: '/404', component: NotFound},
-  {title: 'Dashboard', path: "/", component: Dashboard},
+  // Public Routes
   {title: 'Sign Up', path: "/signup", component: Register, public: true},
   {title: 'Sign In', path: "/signin", component: Login, public: true},
   {title: 'Reset Password', path: "/reset-password", component: ResetPassword, public: true},
   {title: 'Confirmation', path: "/confirm-reset", component: Confirmation, public: true},
+
+  // Private routes
+  {title: '404', path: "/404", component: NotFound},
+  {title: 'Dashboard', path: "/", component: Dashboard},
   {title: 'Registrant', path: "/event/:event_id/registrant/:registrant_id", component: Registrant},
   {title: 'Events', path: "/events", component: Events},
   {title: 'Register for Event', path: "/event/:event_id/register", component: EventRegistration},
