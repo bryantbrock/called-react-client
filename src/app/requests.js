@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const baseUrl = 'https://called-backend.herokuapp.com/called-backend'
+export const baseUrl = process.env.REACT_APP_BACKEND_URL
 
 // Custom request creator
 const createRequest = (method, url) => (data, config = {}, endpoint = null, token = null) => {
