@@ -29,4 +29,8 @@ export const routes = [
   {title: 'Account', path: "/account", component: Account},
 ]
 
-export const urls = routes.map(route => route.path)
+const eventDetailPages = [
+  "/event/1",
+]
+
+export const urls = routes.map(route => route.path).concat(eventDetailPages)
