@@ -1,4 +1,4 @@
-import {Register, Login, ResetPassword, Confirmation, NotFound} from 'app/auth'
+import {Register, Login, ResetPassword, Confirmation} from 'app/auth'
 import {Dashboard} from 'app/dashboard'
 import {Events} from 'app/events'
 import {Event} from 'app/event'
@@ -19,7 +19,6 @@ export const routes = [
   {title: 'Confirmation', path: "/confirm-reset", component: Confirmation, public: true},
 
   // Private routes
-  {title: '404', path: "/404", component: NotFound},
   {title: 'Dashboard', path: "/", component: Dashboard},
   {title: 'Registrant', path: "/event/:event_id/registrant/:registrant_id", component: Registrant},
   {title: 'Events', path: "/events", component: Events},
