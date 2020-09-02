@@ -50,6 +50,12 @@ export class Account extends Component {
                   <Col>•••• {paymentMethod.card.last4}<br /><small className="text-muted">Expires {paymentMethod.card.exp_month.toString().padStart(2, '0')}/{paymentMethod.card.exp_year}</small></Col>
                 </Row>
               </ListGroup.Item>)}
+              {paymentMethods.items < 1 &&
+                <ListGroup.Item>
+                  <Row className="p-2" noGutters>
+                    <Col>No payment methods available.</Col>
+                  </Row>
+                </ListGroup.Item>}
             </ListGroup>
           </div>}
         </Container>
