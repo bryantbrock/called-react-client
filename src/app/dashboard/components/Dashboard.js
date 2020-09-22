@@ -56,7 +56,7 @@ export class Dashboard extends Component {
                       <ListGroup.Item action href="#" key={index}>
                         {registrant.name}
                         {registrant.payment_status == 0 &&
-                          <Badge className="ml-2 float-right" variant="info">Payment incomplete</Badge>}
+                          <Badge className="ml-2 float-right" variant="info">Registration incomplete</Badge>}
                       </ListGroup.Item>
                     </LinkContainer>) :
                     <LinkContainer to="/events">

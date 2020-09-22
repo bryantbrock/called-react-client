@@ -67,7 +67,7 @@ export class Registrant extends Component {
           {registrant.payment_status == 0 &&
             <Alert variant="danger" className="mt-2" dismissible>
               <Alert.Heading>Your registration is incomplete.</Alert.Heading>
-              <p>{stripeSetupIntent}</p>
+              <p>Your spot is not reserved until you pay. {stripeSetupIntent}</p>
               <LinkContainer to={paymentLink}>
                 <Button variant="light">{payment}</Button>
               </LinkContainer>
