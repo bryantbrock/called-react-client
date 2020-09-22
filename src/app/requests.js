@@ -6,14 +6,16 @@ export const baseUrl = process.env.REACT_APP_BACKEND_URL
 const createRequest = (method, url) => (data, config = {}, endpoint = null, token = null) => {
 
   // This function takes a method, endoint, url, and data.
-  // This will eventually need authentication, which I will 
+  // This will eventually need authentication, which I will
   // do once I get there.
 
   const fullPath = endpoint ? `${baseUrl}/${url}/${endpoint}/` : `${baseUrl}/${url}/`
 
   config = token ? {...config, headers: {...config.headers, authorization: `Token ${token}`}} : config
 
-  return ['post', 'put', 'patch'].includes(method) ? axios[method](fullPath, data, config) : axios[method](fullPath, config)
+  return ['post', 'put', 'patch'].includes(method) ?
+    axios[method](fullPath, data, config) :
+    axios[method](fullPath, config)
 }
 
 
