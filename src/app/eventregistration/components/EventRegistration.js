@@ -25,6 +25,7 @@ export class EventRegistration extends Component {
     this.register = this.register.bind(this);
     this.checkDiscountCode = this.checkDiscountCode.bind(this);
     this.registerWithPlan = this.registerWithPlan.bind(this);
+    this.registerWithCheck = this.registerWithCheck.bind(this);
     this.state = {
       registrant: {},
       submitting: false,
@@ -63,6 +64,13 @@ export class EventRegistration extends Component {
                   <h1 className="mb-0">{this.state.discountCode.code ? <span><s className="text-muted">${event.price}</s> ${(event.price * (1 - this.state.discountCode.amount/100)).toFixed(2)}</span> : event.price}</h1>
                   <p className="text-capitalize text-muted"><small>One Time</small></p>
                   <Button disabled={this.state.submitting} variant="primary" size="lg" onClick={this.register}>Select</Button>
+                </Card>
+              </Col>
+              <Col sm={12} md={6} lg={4} className="mt-4">
+                <Card className="p-5 text-center">
+                  <h1 className="mb-0">{this.state.discountCode.code ? <span><s className="text-muted">${event.price}</s> ${(event.price * (1 - this.state.discountCode.amount/100)).toFixed(2)}</span> : event.price}</h1>
+                  <p className="text-capitalize text-muted"><small>Bring/Mail in a Check</small></p>
+                  <Button disabled={this.state.submitting} variant="primary" size="lg" onClick={this.registerWithCheck}>Select</Button>
                 </Card>
               </Col>
               {event.payment_plans.map((plan, index) => {
@@ -117,6 +125,15 @@ export class EventRegistration extends Component {
       registrant: {
         ...prevState.registrant,
         payment_plan: plan,
+      }
+    }), this.register)
+  }
+
+  registerWithCheck() {
+    this.setState(prevState => ({
+      registrant: {
+        ...prevState.registrant,
+        paying_by_check: true,
       }
     }), this.register)
   }

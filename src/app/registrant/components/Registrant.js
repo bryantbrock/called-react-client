@@ -83,7 +83,7 @@ export class Registrant extends Component {
                 <b>Payment plan: </b>
                 {selectedPlan ? selectedPlan.name : 'None'}
               </p>
-              {registrant.stripe_setup_intent && registrant.payment_status != 0 &&
+              {registrant.stripe_setup_intent && registrant.paid &&
                 <Row className="p-2" noGutters>
                   <Col md="auto" className="mr-2">
                     <img style={{height:48}} src={`/card-images/${paymentMethod.card.brand}.png`} />
