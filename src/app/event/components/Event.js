@@ -47,7 +47,7 @@ export class Event extends Component {
           <p className="text-muted"><small>Registration: {event.current_registration} / {event.max_registration}</small></p>
           <h1 className='mt-5'>Your Registrations</h1>
           <ListGroup>
-            {registrant_items.map((registrant, index) => <LinkContainer to={`/event/${event.pk}/registrant/${registrant.pk}`}><ListGroup.Item action href="#" key={index}>{registrant.name}{(registrant.payment_status == 0 ? <Badge className="ml-2 float-right" variant="info">Registration incomplete</Badge> : '')}</ListGroup.Item></LinkContainer>)}
+            {registrant_items.map((registrant, index) => <LinkContainer to={`/event/${event.pk}/registrant/${registrant.pk}`}><ListGroup.Item action href="#" key={index}>{registrant.name}{(registrant.paid == false ? <Badge className="ml-2 float-right" variant="info">Registration incomplete</Badge> : '')}</ListGroup.Item></LinkContainer>)}
             {event.current_registration < event.max_registration && <LinkContainer to={`/event/${event.pk}/register`}><ListGroup.Item action href="#" variant="secondary">+ Register</ListGroup.Item></LinkContainer>}
           </ListGroup>
         </div>
