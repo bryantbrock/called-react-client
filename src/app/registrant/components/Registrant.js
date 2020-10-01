@@ -47,7 +47,7 @@ export class Registrant extends Component {
     const {event, registrant, isFetching} = this.props
     const selectedPlan = isFetching ? null : event.payment_plans.find(plan => plan.pk == registrant.payment_plan)
     const paymentMethod = registrant.stripe_setup_intent ? registrant.stripe_setup_intent.payment_method : null
-    const payment = registrant.stripe_setup_intent ? 'Add a Card' : 'Pay With Card'
+    const payment = registrant.stripe_setup_intent ? 'Add a Card' : 'Pay'
     const paymentLink = `/event/${event.pk}/pay/${registrant.pk}`
     const stripeSetupIntent = registrant.stripe_setup_intent ?
       'Add a card to complete your registration.' :
