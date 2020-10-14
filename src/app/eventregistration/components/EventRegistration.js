@@ -54,7 +54,7 @@ export class EventRegistration extends Component {
           {this.state.invalidCode && <Toast header="Discount Code" message="Your discount code is invalid. It has not been applied." />}
           <h1>Register for {event.name}</h1>
           <div hidden={this.state.submittedRegistrationInfo}>
-            <Form form={event.registration_form} onSubmit={this.submitForm} />
+            <Form form={event.registration_form} onSubmit={this.submitForm} onError={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
           </div>
           <div hidden={!this.state.submittedRegistrationInfo}>
             <h2>How would you like to pay?</h2>
