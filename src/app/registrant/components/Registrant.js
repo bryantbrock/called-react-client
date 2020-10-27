@@ -64,13 +64,18 @@ export class Registrant extends Component {
       <Container className="mt-5">
         <div>
           <h1>{registrant.name}</h1>
-          {registrant.paid == false &&
+          {registrant.paid == false && !registrant.stripe_subscription_schedule &&
             <Alert variant="danger" className="mt-2" dismissible>
               <Alert.Heading>Your registration is incomplete.</Alert.Heading>
               <p>Your spot is not reserved until you pay. {stripeSetupIntent}</p>
               <LinkContainer to={paymentLink}>
                 <Button variant="light">{payment}</Button>
               </LinkContainer>
+            </Alert>}
+            {registrant.paid == false && registrant.stripe_subscription_schedule &&
+            <Alert variant="danger" className="mt-2" dismissible>
+              <Alert.Heading>Your registration is processing.</Alert.Heading>
+              <p>Your card will be charged within an hour.</p>
             </Alert>}
           <Tabs id="uncontrolled-tab-example" className="mt-5">
             <Tab className="p-3" eventKey="registration_information" title="Registration Information">
