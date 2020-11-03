@@ -40,12 +40,12 @@ export const Auth = createSlice({
 })
 
 // Actions
-export const authenticate = (user, signin = false) => async dispatch => {
+export const authenticate = (user, signin = false, next = '/') => async dispatch => {
   dispatch(Auth.actions.isLoading())
 
   await (signin ? signIn(user) : signUp(user))
     .then(res => dispatch(Auth.actions.authSuccess(res.data)))
-    .then(() => history.push('/'))
+    .then(() => history.push(next))
     .catch(err => dispatch(Auth.actions.authFail(err.response.data)))
 }
 
