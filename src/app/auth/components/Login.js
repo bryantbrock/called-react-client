@@ -16,13 +16,29 @@ const authEnhancer = connect(
   }), {authenticate})
 
 class Login extends Component {
-  componentDidMount() {
-    if (this.props.isAuthenticated) {
-      history.push('/')
+  constructor(props) {
+    super(props);
+    this.state = {
+      next: '/',
     }
   }
+
+  componentDidMount() {
+    var next = new URLSearchParams(this.props.location.search).get('next')
+    if (!next) {
+      next = '/';
+    }
+    this.setState({
+      next: next,
+    });
+    if (this.props.isAuthenticated) {
+      history.push(next);
+    }
+  }
+
   render() {
     const {loading, authenticate, errors, history} = this.props
+    const signupURL = this.state.next == '/' ? '/signup' : `/signup?next=${this.state.next}`
 
     return <Container>
         <Card className="m-3">
@@ -30,11 +46,11 @@ class Login extends Component {
           {errors && Object.values(errors).map((value, idx) =>
             <Alert key={idx} variant="danger">{value}</Alert>)}
           <Form
-            onSubmit={data => authenticate(data, true)}
+            onSubmit={data => authenticate(data, true, this.state.next)}
             resetPassword={true}
             fields={loginFields}>
             <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
-            <Button block size="sm" variant="outline-secondary" onClick={() => history.push('/signup')}>Don't have an Account? Sign up</Button>
+            <Button block size="sm" variant="outline-secondary" onClick={() => history.push(signupURL)}>Don't have an Account? Sign up</Button>
           </Form>
         </Card>
     </Container>

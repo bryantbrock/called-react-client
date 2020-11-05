@@ -29,7 +29,7 @@ export class Routing extends Component {
         path={route.path}
         component={withRouter(route.component)}
         title={route.title} /> :
-      <Redirect key={idx} to="/signin" />
+      <Redirect key={idx} to={`/signin?next=${window.location.pathname + window.location.search}`} />
   }
   render() {
     return (
