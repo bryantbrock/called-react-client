@@ -49,7 +49,7 @@ export class EventRegistration extends Component {
     return <div className="events-root">
       <Nav />
       <Container className="mt-5">
-        {this.props.isFetching || this.state.submitting ? <div className="text-center"><Spinner animation="border" /></div> : <div>
+        {this.props.isFetching || this.state.submitting || event == null ? <div className="text-center"><Spinner animation="border" /></div> : <div>
           {this.state.discountCode.code && <Toast header="Discount Code" message={`Discount code ${this.state.discountCode.code} applied!`} />}
           {this.state.invalidCode && <Toast header="Discount Code" message="Your discount code is invalid. It has not been applied." />}
           <h1>Register for {event.name}</h1>
