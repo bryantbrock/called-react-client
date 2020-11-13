@@ -50,7 +50,7 @@ export class Register extends Component {
         <Form
           onSubmit={data => authenticate(data, false, this.state.next)}
           fields={registerFields}>
-          <SubmitButton isLoading={loading} className="mb-4">Sign Up</SubmitButton>
+          <SubmitButton style={{backgroundColor:'#0d3666',borderColor:'#0d3666'}} isLoading={loading} className="mb-4">Sign Up</SubmitButton>
           <Button variant="outline-dark" onClick={() => history.push(signinURL)}>Already have an Account? Sign in</Button>
         </Form>
       </Card>

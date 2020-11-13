@@ -42,14 +42,15 @@ class Login extends Component {
 
     return <Container>
         <Card className="m-3">
-          <h1 className="mb-3">Sign In</h1>
+          <img style={{maxWidth:128}} src={process.env.PUBLIC_URL + '/swords-shovels-blue.png'} alt="Logo" />
+          <h1 className="mb-3">NSA Events</h1>
           {errors && Object.values(errors).map((value, idx) =>
             <Alert key={idx} variant="danger">{value}</Alert>)}
           <Form
             onSubmit={data => authenticate(data, true, this.state.next)}
             resetPassword={true}
             fields={loginFields}>
-            <SubmitButton isLoading={loading} className="mb-4">Login</SubmitButton>
+            <SubmitButton style={{backgroundColor:'#0d3666',borderColor:'#0d3666'}} isLoading={loading} className="mb-4">Login</SubmitButton>
             <Button block size="sm" variant="outline-secondary" onClick={() => history.push(signupURL)}>Don't have an Account? Sign up</Button>
           </Form>
         </Card>
