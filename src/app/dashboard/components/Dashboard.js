@@ -55,6 +55,8 @@ export class Dashboard extends Component {
                     <LinkContainer to={`/event/${registrant.event}/registrant/${registrant.pk}`}>
                       <ListGroup.Item action href="#" key={index}>
                         {registrant.name}
+                        {(registrant.paid == true && registrant.number_of_unanswered_additional_forms > 0 ?
+                          <Badge className="ml-2 float-right" variant="info">{registrant.number_of_unanswered_additional_forms} Unfilled Form{(registrant.number_of_unanswered_additional_forms != 1 ? 's' : '')}</Badge> : '')}
                         {registrant.paid == false &&
                           <Badge className="ml-2 float-right" variant="info">Registration incomplete</Badge>}
                       </ListGroup.Item>

@@ -6,6 +6,7 @@ import {EventRegistration} from 'app/eventregistration'
 import {EventPayment} from 'app/eventpayment'
 import {Registrant} from 'app/registrant'
 import {Account} from 'app/account'
+import {AdditionalForm} from 'app/additionalform'
 
 // Just changed it to all routes being
 // private by default, and you need to specify
@@ -21,6 +22,7 @@ export const routes = [
   // Private routes
   {title: 'Dashboard', path: "/", component: Dashboard},
   {title: 'Registrant', path: "/event/:event_id/registrant/:registrant_id", component: Registrant},
+  {title: 'Additional Form', path: "/event/:event_id/registrant/:registrant_id/additional-form/:additional_form_id", component: AdditionalForm},
   {title: 'Events', path: "/events", component: Events},
   {title: 'Register for Event', path: "/event/:event_id/register", component: EventRegistration},
   {title: 'Register for Event', path: "/event/:event_id/pay/:registrant_id", component: EventPayment},

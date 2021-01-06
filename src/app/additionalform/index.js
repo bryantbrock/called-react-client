@@ -1,0 +1,1 @@
+export {default as AdditionalForm} from 'app/additionalform/components/AdditionalForm'
