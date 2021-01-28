@@ -4,6 +4,7 @@ import {Alert, Button, Col, Form, ListGroup, Row, Spinner} from 'react-bootstrap
 import {ElementsConsumer, CardElement} from '@stripe/react-stripe-js';
 import {store} from 'store.js'
 import {backgroundFetchPaymentMethods} from 'app/account/actions'
+import { toast } from 'react-toastify';
 
 const enchanceCheckoutForm = connect(
   (state, ownProps) => ({
@@ -156,6 +157,7 @@ class CheckoutForm extends React.Component {
             error: '',
           })
           history.push(`/event/${event_id}`)
+          toast.success('Thank you. Your registration is complete.')
         }
       });
   };

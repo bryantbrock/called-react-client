@@ -8,6 +8,7 @@ import {createRegistrant} from '../actions.js'
 import {store} from 'store.js'
 import Toast from 'components/Toast.js'
 import {validateDiscountCode} from 'app/requests'
+import { toast } from 'react-toastify';
 
 const enchanceEventRegistration = connect(
   (state, ownProps) => ({
@@ -101,7 +102,10 @@ export class EventRegistration extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.newest !== this.props.newest) {this.props.history.push(`/event/${this.props.match.params.event_id}/pay/${this.props.newest}`)}
+    if (prevProps.newest !== this.props.newest) {
+      this.props.history.push(`/event/${this.props.match.params.event_id}/pay/${this.props.newest}`);
+      toast.success('Your information has been saved. Make a payment to complete registration.')
+    }
   }
 
   register() {
