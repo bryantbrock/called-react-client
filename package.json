@@ -16,7 +16,7 @@
     "classnames": "^2.2.6",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-autobind": "^1.0.6",
